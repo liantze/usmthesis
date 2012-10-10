@@ -1,0 +1,223 @@
+\documentclass[urlsf]{usmthesis}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% This is usmthesis.tex, Nov 27 2007.
+% Created by Lim Lian Tze,
+% Computer Aided Translation Unit,
+% School of Computer Sciences, 
+% Universiti Sains Malaysia, Penang, Malaysia.
+%
+% This is the "main" file for the thesis, 
+% formatted according to the Guide to the 
+% Preparation, Submission and Examination of
+% Theses, published by IPS USM.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Example of loading other packages that you may require.
+%% I'm loading the marvosym package so that I can produce a
+%% smiley face with the command \Smiley.
+\usepackage{marvosym}
+
+%% Enter particulars about your thesis HERE
+% Your Name
+\author{Lim Lian Tze}
+% English title of your thesis
+\title{Writing Your Thesis with LaTeX}
+% Malay title of your thesis
+\titlems{Penulisan Tesis dengan LaTeX}
+% Year submitted
+\submityear{2007}
+% Month submitted
+\submitmonth{December}
+%% Choose only 1 degree type! :-)
+%\degreetype{Doctor of Philosphy}
+\degreetype{Master of Science}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  You can comment out the following line if you don't have a
+% "List of Own Publications"
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcites{own}{List of Publications}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Options for generating hyperlinks when using pdfLaTeX
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ifpdf
+  \makeatletter
+  \usepackage[pdftex,plainpages=false,hypertexnames=false,bookmarksnumbered,pdfpagelabels,%
+    pdfauthor={\@author},pdftitle={\@title}]{hyperref}
+  \makeatother
+\else
+  \usepackage[dvips,plainpages=false,bookmarksnumbered,breaklinks=true]{hyperref}
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% As we have loaded the natbib package, you can customise
+% the citation style to some extent.  The following line
+% specifies some standard punctuations:
+%
+% \bibpunct{#1}{#2}{#3}{#4}{#5}{#6}
+% #1: open punctuation (a round bracket here)
+% #2: close punctuation (a round bracket here)
+% #3: punctuation separating multiple authors (a semi-colon here)
+% #4: n - citation using numerical system
+%     s - numeric superscript system
+%     any other letter - author-year system
+% #5: punctuation separating author name(s) from year
+% #6: punctuation separating years for multiple citations
+%     with same author(s)
+%
+% The default citation that I used here is therefore of the form
+% (Wilks and Stevenson, 1999; Somers, 2000)
+%
+% You may change any of the 6 parameters if you prefer a
+% different citation style.  Also see the natbib documentation.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibpunct{(}{)}{;}{a}{,}{,}
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% You can choose from several bibliography styles. I'm using
+% the author-year system with agsm for the bibliography
+% entries here, but feel free to experiment with other styles.
+%
+% If you prefer the number system though, use bibliography
+% style "plainnat" for [1][2][3] or "alpha" for [Jon94] (the label
+% will be auto-generated).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibliographystyle{dcu}
+\bibliographystyleown{dcu}
+%\bibliographystyle{plainnat}
+%\bibliographystyleown{plainnat}
+
+
+\lstset{fontadjust=true}
+
+\frontmatter
+
+\addtocontents{lof}{\protect\raggedright\protect\sloppy}
+\addtocontents{lof}{\protect\hfill{\protect\bfseries Page}\\}
+\addtocontents{lot}{\protect\raggedright\protect\sloppy}
+\addtocontents{lot}{\protect\hfill{\protect\bfseries Page}\\}
+\addtocontents{lop}{\protect\raggedright\protect\sloppy}
+\addtocontents{lop}{\protect\hfill{\protect\bfseries Page}\\}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Inserts the cover page (the hard cover with gold-lettering)
+% and the title page 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makecover
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Inserts a "Front Matter" bookmark if using pdfLaTeX
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ifpdf
+    \pdfbookmark[-1]{Front Matter}{front}
+\else\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MAKE SURE YOU HAVE A acknowledgements.tex FILE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\include{acknowledgements}
+
+
+\renewcommand\contentsname{Table of Contents}
+\begin{singlespace}
+\tableofcontents \clearpage
+\listoftables \clearpage
+\listoffigures \clearpage
+\listofplates \clearpage
+\end{singlespace}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% You can comment out the following line if you don't
+% have a "List of Acronyms"
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\include{loa}
+
+
+% Paragraph spacing
+\setlength\parskip{18pt}
+% Text-float spacing
+\setlength\intextsep{24pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Your Malay and English abstracts, each in one file.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{abs-mal}
+\input{abs-eng}
+
+\addtocontents{toc}{\protect\setlength{\protect\cftbeforechapskip}{2.5pc}}
+\addtocontents{toc}{\protect\cftpagenumbersoff{chap}}
+ 
+\mainmatter
+\ifpdf
+  \pdfbookmark[-1]{Main Chapters}{main}
+\else\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% The actual chapters of your thesis as listed in 
+% mainchaps.tex. Make sure you have the relevant
+% chapter files. 
+% E.g. if you mainchaps.tex contains the lines
+%
+%  \include{hypothesis.tex}
+%  \include{proof.tex}
+%
+% Then you MUST have the files hypothesis.tex, proof.tex
+% (containing the relevant chapters) in the same directory
+% as mainchaps.tex.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{mainchaps}
+
+\addtocontents{toc}{\protect\cftpagenumberson{chap}}
+
+%\ifpdf
+%  \pdfbookmark[-1]{Back Matter}{back}
+%\else\fi
+
+\begin{singlespace}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% The bibliography.
+% You can create mybib.bib with JabRef, the program included
+% in the Colloquium05 CD-ROM.  Or download from
+% http://jabref.sourceforge.net/
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibliography{mybib}
+\end{singlespace}
+
+\addtocontents{toc}{\protect\setlength{\protect\cftbeforechapskip}{1pc}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% The appendices.
+% If you don't have any, you may delete everything below,
+% until and including \input{appendices}.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\appendix
+\phantomsection\addcontentsline{toc}{part}{\texorpdfstring{\uppercase{Appendices}}{Appendices}}
+\thispagestyle{empty}
+\vspace*{\stretch{1}}
+  \begin{center}
+    {\Huge\bfseries APPENDICES}
+  \end{center}
+\vspace*{\stretch{2}}
+\addtocontents{toc}{\protect\renewcommand{\protect\chaptername}{\appendixname}} 
+\addtocontents{toc}{\protect\setlength\cftchapnumwidth{7pc}}
+
+\renewcommand\chaptername{\appendixname}
+\input{appendices}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% The list of own publications.  If you don't have one, you may
+% comment out the next 3 lines (up till just before \end{singlespace}.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\nociteown{lim:2007,lim:latextypesetting}
+\addtocontents{toc}{\protect\setlength{\protect\cftbeforechapskip}{3pc}}
+\begin{singlespace}
+\bibliographyown{mybib}
+\end{singlespace}
+
+\end{document}

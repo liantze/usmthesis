@@ -1,0 +1,48 @@
+BRIEF CHANGELOG
+===============
+v1.3 May 12 2012
+    - Refined spacing in bibliography list and after chapter heading
+    - Fixed font size in cover (from 17pt to 18pt)
+    - User can now specify preferred document body font size (11pt or 12pt)
+       as a class option. The default is 11pt.
+    - Changed font sizes of section, subsection headings to \normalsize.
+
+v1.2 Nov 15 2007
+   - New thesis format in force as of 16 November 2007!
+   - There is now no times, helvet or cm options. Body font is now 
+     Times Roman for serif type, Helvetica for sans serif type, and
+     TX Typewriter for typewriter font.
+   - Bottom page margin increased to 4.0cm.
+   - Page number now placed 1.0cm from bottom edge of paper.
+   - All text on title page are now in bold.
+   - Title of bibliography/references is now "REFERENCES".
+   - Introduced new "plate" float and "List of Plates".
+   - List of Publications is now moved to *after* appendices.
+   - Re-formatting of the table of contents:
+     * all text are unformatted (chapter headings are neither in bold nor
+       using larger font size
+     * dotted leader between titles and page number
+     * larger separation between (sub)section numbers and titles to resemble
+       the sample in the guidelines more closely
+   - Fixed bug in definition of \chapter to honour short title in 
+     \chapter[short title]{full title}
+
+v1.1 May 20 2007
+   - re-definition of \chapter, therefore eliminating the need for \mychapter.
+     Various GUI LaTeX editors will now recognise the chapter divisions.
+   - added \RequirePackage[T1]{fontenc}.
+   - updated quickstart.tex: removed note about \mychapter.
+
+v1.0 June 1 2006
+   - usmthesis is now provided as a document class (usmthesis.cls).
+   - introduced class options for:
+       * body font scheme (on suggestion by Dr Dhanesh)
+       * style of URLs
+       * whether figures are framed by default (on feedback from Anusha and
+         Seng Soon).
+   - updated usmthesis.tex to describe how to do common tasks in LaTeX
+   - new quickstart.tex to describe how to use usmthesis.cls and accompanying
+     template files.
+
+v0.1 Nov 29 2005
+   - first stab at usmthesis as a package (usmthesis.sty).
