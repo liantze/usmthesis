@@ -261,22 +261,22 @@
 \renewcommand\cftfigpresnum{Figure }
 \cftsetindents{fig}{0pt}{6.2pc}
 \renewcommand\cftfigdotsep{\cftnodots}
-\renewcommand\cftfigpagefont{\bfseries}
+%\renewcommand\cftfigpagefont{\bfseries}
 
 \renewcommand\cftsubfigpresnum{Figure }
 \cftsetindents{subfig}{0pt}{6.2pc}
 \renewcommand\cftsubfigdotsep{\cftnodots}
-\renewcommand\cftsubfigpagefont{\bfseries}
+%\renewcommand\cftsubfigpagefont{\bfseries}
 
 \renewcommand\cfttabpresnum{Table }
 \cftsetindents{tab}{0pt}{6.2pc}
 \renewcommand\cfttabdotsep{\cftnodots}
-\renewcommand\cfttabpagefont{\bfseries}
+%\renewcommand\cfttabpagefont{\bfseries}
 
 \renewcommand\cftplatepresnum{Plate }
 \cftsetindents{plate}{0pt}{6.2pc}
 \renewcommand\cftplatedotsep{\cftnodots}
-\renewcommand\cftplatepagefont{\bfseries}
+%\renewcommand\cftplatepagefont{\bfseries}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
