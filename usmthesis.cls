@@ -1,5 +1,5 @@
 %%
-%% usmthesis.cls 2012/05/12 version V1.3
+%% usmthesis.cls 2015/04/14 version V1.4
 %% 
 %% NOTE: This text file uses UNIX line feed conventions. When (human)
 %% reading this file on other platforms, you may have to use a text
@@ -24,12 +24,18 @@
 %% I'll always try.
 %%
 %%
-%% Copyright (c) 2005-2012 by Lim Lian Tze
+%% Copyright (c) 2005-2015 by Lim Lian Tze
 %%
 %% Current maintainer: Lim Lian Tze (liantze@gmail.com)
 %
 %  BRIEF CHANGELOG
 %  ===============
+% v1.4 Apr 14 2015
+%     - Now works with updated acronym package.
+%     - Finally using bahasam babel option (and removed the french language,
+%       couldn't remember why I didn't remove it after some personal tests).
+%     - Page numbers in content lists are now unbold (requested by IPS).
+%
 % v1.3 May 12 2012
 %     - Refined spacing in bibliography list and after chapter heading
 %     - Fixed font size in cover (from 17pt to 18pt)
@@ -98,7 +104,7 @@
 %   The default is noboxfig.
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{usmthesis}[2010/05/12 LaTeX2e class for USM Thesis v1.2.1]
+\ProvidesClass{usmthesis}[2015/04/14 version V1.4]
 
 % switches for URL font
 \newif\if@urltt
@@ -145,12 +151,11 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % When "bahasa" is specified last, all the sectioning 
-% commands become Malay (Indonesian?) e.g. "Bab", 
+% commands become Malay e.g. "Bab", 
 % "Dafter Isi" etc.  "english" is the main language
-% here; I just included bahasa so that hyphenations in 
-% the Malay abstract wouldn't be messed up.
+% here. Babel now supports bahasam.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage[french,bahasa,english]{babel}
+\RequirePackage[bahasam,english]{babel}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -341,20 +346,21 @@
 \renewcommand*{\acsfont}[1]{\rmfamily #1}
 \renewcommand*{\acffont}[1]{\rmfamily #1}
 
-\renewenvironment{AC@deflist}[1]%
-        {\ifAC@nolist%
-         \else%
-            \raggedright\begin{list}{}%
-                {\settowidth{\labelwidth}{\textbf{\textrm{#1}}}%
-                \setlength{\leftmargin}{\labelwidth}%
-                \addtolength{\leftmargin}{\labelsep}%
-                \renewcommand{\makelabel}{\bflabel}}%
-          \fi}%
-        {\ifAC@nolist%
-         \else%
-            \end{list}%
-         \fi}
-
+%% Apr 14, 2015: cater for new acronym.sty
+%\renewenvironment{AC@deflist}[1]%
+%        {\ifAC@nolist%
+%         \else%
+%            \raggedright\begin{list}{}%
+%                {\settowidth{\labelwidth}{\textbf{\textrm{#1}}}%
+%                \setlength{\leftmargin}{\labelwidth}%
+%                \addtolength{\leftmargin}{\labelsep}%
+%                \renewcommand{\makelabel}{\bflabel}}%
+%          \fi}%
+%        {\ifAC@nolist%
+%         \else%
+%            \end{list}%
+%         \fi}
+\renewcommand*{\aclabelfont}[1]{\textbf{\acsfont{#1}}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Table-related packages
@@ -486,7 +492,7 @@ for the degree of\\
 
 %% Malay abstract environment
 \newenvironment{MsAbstract}
-  {\begin{otherlanguage}{bahasa}%
+  {\begin{otherlanguage}{bahasam}%
     \chapter[Abstrak]{\@titlems}%
     \begin{center}{\Large\bfseries ABSTRAK}\end{center}}
   {\end{otherlanguage}}

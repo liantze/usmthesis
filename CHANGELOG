@@ -1,5 +1,10 @@
 BRIEF CHANGELOG
 ===============
+ v1.4 Apr 14 2015
+   - Now works with updated acronym package
+   - Finally using bahasam babel option (and removed the french language,
+     couldn't remember why I didn't remove it after some personal tests)
+
 v1.3 May 12 2012
     - Refined spacing in bibliography list and after chapter heading
     - Fixed font size in cover (from 17pt to 18pt)
