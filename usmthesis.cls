@@ -1,5 +1,5 @@
 %%
-%% usmthesis.cls 2015/04/14 version V1.4
+%% usmthesis.cls 2015/05/12 version V1.5
 %% 
 %% NOTE: This text file uses UNIX line feed conventions. When (human)
 %% reading this file on other platforms, you may have to use a text
@@ -30,6 +30,10 @@
 %
 %  BRIEF CHANGELOG
 %  ===============
+% v1.5 Apr 12 2015
+%     - Thesis titles in abstracts are now double-spaced if >1 lines, and
+%       are smaller than the "Abstract"/"Abstrak" keywords.
+%
 % v1.4 Apr 14 2015
 %     - Now works with updated acronym package.
 %     - Finally using bahasam babel option (and removed the french language,
@@ -486,13 +490,13 @@ for the degree of\\
 
 %% English environment
 \newenvironment{EnAbstract}
-  {\chapter[Abstract]{\@title}%
-    \begin{center}{\Large\bfseries ABSTRACT}\end{center}}
-  {}
+  {\chapter[Abstract]{\linespread{2}\large\@title}%
+    \begin{center}{\Large\bfseries ABSTRACT}\end{center}\ignorespaces}
+  {\ignorespacesafterend}
 
 %% Malay abstract environment
 \newenvironment{MsAbstract}
   {\begin{otherlanguage}{bahasam}%
-    \chapter[Abstrak]{\@titlems}%
-    \begin{center}{\Large\bfseries ABSTRAK}\end{center}}
-  {\end{otherlanguage}}
+    \chapter[Abstrak]{\linespread{2}\large\@titlems}%
+    \begin{center}{\Large\bfseries ABSTRAK}\end{center}\ignorespaces}
+  {\end{otherlanguage}\ignorespacesafterend}
