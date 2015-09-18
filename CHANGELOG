@@ -1,6 +1,21 @@
 BRIEF CHANGELOG
 ===============
- v1.4 Apr 14 2015
+v1.6 Aug 21 2015
+    - (Based on feedback from Puan Nurul Hasyda of IPS)
+    - Chapters are now in bold in the TOC.
+    - Eliminated vertical spaces at the top and bottom of cover and 
+      title page.
+    - Apparently if using Times, must be in 12pt. So no more 11pt,
+      12pt choices. But sans serif (Arial) is allowed again, but must
+      be at 11pt.
+    - Instead, the "times" option loads mathptmx 12pt as body font,
+      and "arial" option loads "helvet" 11pt as body font.
+
+v1.5 Apr 16 2015
+    - Thesis titles in abstracts are now double-spaced if >1 lines, and
+      are smaller than the "Abstract"/"Abstrak" keywords.
+
+v1.4 Apr 14 2015
    - Now works with updated acronym package
    - Finally using bahasam babel option (and removed the french language,
      couldn't remember why I didn't remove it after some personal tests)

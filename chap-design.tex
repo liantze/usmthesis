@@ -6,22 +6,19 @@
 
 \section{Inserting Figures}\label{sec:figure}
 
-%When using \LaTeX{}, you can't exactly draw figures on-the-fly as you do in WYSIWYG word processors like Word.  (Well, actually you CAN, but the \LaTeX{} way of line drawings is still beyond this author.)  
 You can draw diagrams with special \LaTeX\ commands, but this may take some extra time to learn.  I've had some forays into the \texttt{pgf} and \texttt{tikz} packages and must say I quite like the results; but as I said, they take time to learn. If you want a faster solution, you can draw your diagrams using other applications, and saving them as graphic files (EPS, PNG, JPG, PDF).  
 
-\LaTeX{} requires EPS (encapsulated postscript) graphic files when generating DVI output, and PNG, JPG or PDF when generating PDF output.  (I have never got GIF files to work.  If you have, please let me know.)
+\LaTeX{} requires EPS (encapsulated postscript) graphic files when generating DVI output, and PNG, JPG or PDF when generating PDF output.
 
-%I myself create the diagrams in Powerpoint (since sooner or later I'll have to give some sort of presentation about my project anyway), saving them as PNG, and then export the PNG files.
-
-For exporting to EPS, I use GIMP, the open-source (and free-of-charge) equivalent of Photoshop\footnote{GIMP runs on Windows too, but remember to install GTK2+ first.  You'll find the download links on the GIMP website at \url{http://www.gimp.org/}.  If you're comfortable with the command line interface, you may consider ImageMagick, too.}.  I see an export to EPS option too in Photoshop, but the resultant file just doesn't seem to work with \LaTeX.
+For exporting to EPS, try \url{http://www.cloudconvert.com}. It's like a Swiss knife for converting from almost any format, to almost any format.
 
 Do note that IPS \textbf{discourages} the use of colours in your thesis, including diagrams and figures.  Phographs and colour plates are exceptions to this rule: see Section~\ref{sec:plate}.
 
 Here's how to insert a picture with the filename \verb|pythag.eps| or \verb|pythag.png|.  I'm going to display it here with 5cm width, and the caption ``Pythagoras' Theorem''.
 
-\begin{figure}[hbtf!]
+\begin{figure}[hbt!]
 \begin{lstlisting}
-\begin{figure}[hbtf!]\centering
+\begin{figure}[hbt!]\centering
 \includegraphics[width=50mm]{pythag}
 \caption{Pythagoras' Theorem}\label{fig:pythagoras}
 \end{figure}
@@ -31,7 +28,7 @@ Here's how to insert a picture with the filename \verb|pythag.eps| or \verb|pyth
 
 The result would be:
 
-\begin{figure}[hbtf!]\centering
+\begin{figure}[hbt!]\centering
 \includegraphics[width=50mm]{pythag}
 \caption{Pythagoras' Theroem} \label{fig:pythagoras}
 \end{figure}
@@ -51,6 +48,41 @@ Everytime the numbering of the heading changes, the reference will change automa
 
 You might also want to try out \texttt{JpgfDraw}: it is a vector graphics and drawing application (requiring Java), and can export to \LaTeX{} code which you can paste into your \LaTeX{} source. \texttt{JpgfDraw} is available from \url{http://theoval.cmp.uea.ac.uk/~nlct/jpgfdraw/index.html}.
 
+\section{How Do I Do Subfigures?}
+Here's an example on how to do subfigures (and similarly subtables):
+
+\begin{figure}[hbt!]
+\begin{lstlisting}
+\begin{figure}[hbt!]
+  \begin{minipage}{.49\textwidth}
+  \centering
+  \subfloat[First caption]{\includegraphics[width=3cm]{pythag}} \label{fig:sub1}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{.49\textwidth}
+  \subfloat[Second caption]{\includegraphics[width=0.8\textwidth]{USMScience}}\label{fig:sub2}
+  \end{minipage}
+  
+  \caption{This is the main caption of the figure.}
+  \label{fig:main}
+\end{figure}
+\end{lstlisting}
+\caption{Creating subfigures within figures}
+\end{figure}
+
+\begin{figure}[hbt!]
+  \begin{minipage}{.49\textwidth}
+  \centering
+  \subfloat[First caption]{\includegraphics[width=3cm]{pythag}} \label{fig:sub1}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{.49\textwidth}
+  \subfloat[Second caption]{\includegraphics[width=0.8\textwidth]{USMScience}}\label{fig:sub2}
+  \end{minipage}
+  
+  \caption{This is the main caption of the figure.}
+  \label{fig:main}
+\end{figure}
 
 \section{Inserting Plates}\label{sec:plate}
 
@@ -59,9 +91,9 @@ Colour photographs are now regarded as \emph{plates}. They must be listed in the
 The \texttt{usmthesis} document class defines a new \texttt{plate} environment, as well as a corresponding \verb|\listofplates| command.  (The \verb|\listofplates| command is already placed in the sample template file \verb|usmthesis.tex|.)  In short, all you need to do to insert a photograph or plate (as a graphics file \verb|USMScience.{eps,png,jpg}|) is shown in Figure~\ref{fig:lst:plate}, and you will then get Plate~\ref{plate:ppsk:usm} as the result.
 
 
-\begin{figure}[hbtf!]
+\begin{figure}[hbt!]
 \begin{lstlisting}
-\begin{plate}[hbtf!]\centering
+\begin{plate}[hbt!]\centering
 \includegraphics[width=.9\textwidth]{USMScience}
 \caption{School of Computer Sciences, USM}\label{plate:ppsk:usm}
 \end{plate}
@@ -69,7 +101,7 @@ The \texttt{usmthesis} document class defines a new \texttt{plate} environment, 
 \caption{Inserting a Plate}\label{fig:lst:plate}
 \end{figure}
 
-\begin{plate}[hbtf!]\centering
+\begin{plate}[hbt!]\centering
 \includegraphics[width=.9\textwidth]{USMScience}
 \caption{School of Computer Sciences, USM}\label{plate:ppsk:usm}
 \end{plate}
@@ -81,9 +113,9 @@ Typesetting tables can be a little troublesome especially with complex layouts. 
 
 If using \textrm{LaTable}, when you're done designing the table, copy the whole table as \LaTeX\ code, and paste it in your source file.  (You may add additional formatting commands, like bold, italics, etc.)  If this is going to be a numbered table, remember to surround it with \verb|\begin{table}| and \verb|\end{table}|, and give it a caption, like this:
 
-\begin{figure}[hbtf!]
+\begin{figure}[hbt!]
 \begin{lstlisting}
-\begin{table}[hbtf!]\centering
+\begin{table}[hbt!]\centering
 \begin{tabular}{| l | c || r |}
 \hline
 \textbf{Name} & \textbf{Category} & \textbf{Quantity} \\ 
@@ -101,7 +133,7 @@ Daisy & Flower & 5 \\
 \caption{Typesetting Tables}\label{fig:lst:table}
 \end{figure}
 
-\begin{table}[hbtf!]\centering
+\begin{table}[hbt!]\centering
 \begin{tabular}{| l | c || r |}
 \hline
 \textbf{Name} & \textbf{Category} & \textbf{Quantity} \\ 
@@ -118,49 +150,49 @@ Daisy & Flower & 5 \\
 
 Note also that \verb|usmthesis| is configured such that captions for figures are placed \emph{below} the figures, and captions for tables are placed \emph{above} them, in accordance with the formatting guidelines.
 
-%Many of us would have had massive headaches about lining up decimal places in table columns (as mentioned in the IPS guidelines) if not for this tip from \citep[pp.~274--276]{latex:companion}. This method uses the \verb|dcolumn| package (already loaded by \verb|usmthesis.cls|). Instead of using \verb|l,c| or \verb|r| as the column type in the \verb|tabular| declaration, use\\ \texttt{D\{\textit{input sep}\}\{\textit{output sep}\}\{\textit{decimal places}\}}.
-%
-%\begin{figure}[htb!]
-%\begin{lstlisting}
-%\begin{table}[htb!]\centering
-%\begin{tabular}{| c | D{.}{.}{2} |}
-%\hline
-%Item & \multicolumn{1}{c|}{Reading}\\\hline
-%A & 1.11\\\hline
-%B & 3.99\\\hline
-%C & 2.27\\\hline
-%\end{tabular}
-%\caption{A table with decimal data}
-%\end{table}
-%\end{lstlisting}
-%\caption{Aligning decimal data in tables}\label{fig:align:decimal}
-%\end{figure}
-%
-%The \LaTeX\ code in Figure~\ref{fig:align:decimal} will give you Table~\ref{tab:align:decimal}.
-%
-%\begin{table}[htb!]\centering
-%\begin{tabular}{| c | D{.}{.}{2} |}
-%\hline
-%Item & \multicolumn{1}{c|}{Reading}\\\hline
-%A & 1.11\\\hline
-%B & 3.99\\\hline
-%C & 2.27\\\hline
-%\end{tabular}
-%\caption{A table with decimal data}\label{tab:align:decimal}
-%\end{table}
-%
-%Without using \verb|dcolumn|, you'd get something like this:
-%
-%\begin{table}[htb!]\centering
-%\begin{tabular}{| c | r |}
-%\hline
-%Item & \multicolumn{1}{c|}{Reading}\\\hline
-%A & 1.111\\\hline
-%B & 3.999\\\hline
-%C & 2.277\\\hline
-%\end{tabular}
-%\caption{A table with decimal data (mis-aligned)}
-%\end{table}
+Many of us would have had massive headaches about lining up decimal places in table columns (as mentioned in the IPS guidelines) if not for this tip from \citep[pp.~274--276]{latex:companion}. This method uses the \verb|dcolumn| package (already loaded by \verb|usmthesis.cls|). Instead of using \verb|l,c| or \verb|r| as the column type in the \verb|tabular| declaration, use\\ \texttt{D\{\textit{input sep}\}\{\textit{output sep}\}\{\textit{decimal places}\}}.
+
+\begin{figure}[htb!]
+\begin{lstlisting}
+\begin{table}[htb!]\centering
+\begin{tabular}{| c | D{.}{.}{2} |}
+\hline
+Item & \multicolumn{1}{c|}{Reading}\\\hline
+A & 1.11\\\hline
+B & 3.99\\\hline
+C & 2.27\\\hline
+\end{tabular}
+\caption{A table with decimal data}
+\end{table}
+\end{lstlisting}
+\caption{Aligning decimal data in tables}\label{fig:align:decimal}
+\end{figure}
+
+The \LaTeX\ code in Figure~\ref{fig:align:decimal} will give you Table~\ref{tab:align:decimal}.
+
+\begin{table}[htb!]\centering
+\begin{tabular}{| c | D{.}{.}{3} |}
+\hline
+Item & \multicolumn{1}{c|}{Reading}\\\hline
+A & 1.11\\\hline
+B & 3.999\\\hline
+C & 22.2\\\hline
+\end{tabular}
+\caption{A table with decimal data}\label{tab:align:decimal}
+\end{table}
+
+Without using \verb|dcolumn|, you'd get something like this:
+
+\begin{table}[htb!]\centering
+\begin{tabular}{| c | r |}
+\hline
+Item & \multicolumn{1}{c|}{Reading}\\\hline
+A & 1.11\\\hline
+B & 3.999\\\hline
+C & 22.2\\\hline
+\end{tabular}
+\caption{A table with decimal data (mis-aligned)}
+\end{table}
 
 
 \section{Full-paged, Sideways Figures and Tables}
@@ -255,55 +287,59 @@ If you have a list of acronyms or symbols, edit the file \verb|loa.tex| as in Fi
 You can also use this acronym list to help expand it the first time you mention it in your text.  For example, the first time you use \verb|\ac{USM}|, `\ac{USM}' will be the output (without the quotes).  After that, all calls to \verb|\ac{USM}| will give `\ac{USM}' (without the quotes).  For more information, see the documentation for the \texttt{acronym} package.
 
 
+% Please feel free to use whatever package you like for typesetting algorithms!
 \section{Typesetting Algorithms}
 
-As computer scientists, it is quite common to include algorithms.  The \verb|algorithmic| package is very handy for this.  Its documentation, found under the \verb|doc/latex/algorithms| subdirectory of the \LaTeX\ installation directory, is very helpful.  We reproduce a short example from the documentation here.
+As computer scientists, it is quite common to include algorithms and/or pseudocode. There are a number of different packages available, but unfortunately they tend not to work well together! I'm using \texttt{algorithmicx} here.
 
 \begin{figure}[hbt!]
 \begin{lstlisting}
+\begin{algorithm}[hbt!]
 \begin{algorithmic}
-\REQUIRE $n \geq 0$
-\ENSURE $y = x^n$
-\STATE $y \Leftarrow 1$
-\STATE $X \Leftarrow x$
-\STATE $N \Leftarrow n$
-\WHILE{$N \neq 0$}
-\IF{$N$ is even}
-\STATE $X \Leftarrow X \times X$
-\STATE $N \Leftarrow N / 2$
-\ELSE[$N$ is odd]
-\STATE $y \Leftarrow y \times X$
-\STATE $N \Leftarrow N - 1$
-\ENDIF
-\ENDWHILE
+\Require $n \geq 0$
+\Ensure $y = x^n$
+\State $y \Leftarrow 1$
+\State $X \Leftarrow x$
+\State $N \Leftarrow n$
+\While{$N \neq 0$}
+\If{$N$ is even}
+  \State $X \Leftarrow X \times X$
+  \State $N \Leftarrow \frac{N}{2} $  \Comment{This is a comment}
+\ElsIf{$N$ is odd}
+  \State $y \Leftarrow y \times X$
+  \State $N \Leftarrow N - 1$
+\EndIf
+\EndWhile
 \end{algorithmic}
+\caption{Computing $x^n, n > 0$}
+\end{algorithm}
 \end{lstlisting}
 \caption{Typesetting Algorithms}\label{fig:lst:algo}
 \end{figure}
 
-\begin{figure}[hbt!]
+\begin{algorithm}[hbt!]
 \begin{algorithmic}
-\REQUIRE $n \geq 0$
-\ENSURE $y = x^n$
-\STATE $y \Leftarrow 1$
-\STATE $X \Leftarrow x$
-\STATE $N \Leftarrow n$
-\WHILE{$N \neq 0$}
-\IF{$N$ is even}
-\STATE $X \Leftarrow X \times X$
-\STATE $N \Leftarrow N / 2$
-\ELSE[$N$ is odd]
-\STATE $y \Leftarrow y \times X$
-\STATE $N \Leftarrow N - 1$
-\ENDIF
-\ENDWHILE
+\Require $n \geq 0$
+\Ensure $y = x^n$
+\State $y \Leftarrow 1$
+\State $X \Leftarrow x$
+\State $N \Leftarrow n$
+\While{$N \neq 0$}
+\If{$N$ is even}
+  \State $X \Leftarrow X \times X$
+  \State $N \Leftarrow \frac{N}{2} $  \Comment{This is a comment}
+\ElsIf{$N$ is odd}
+  \State $y \Leftarrow y \times X$
+  \State $N \Leftarrow N - 1$
+\EndIf
+\EndWhile
 \end{algorithmic}
 \caption{Computing $x^n, n > 0$}
-\end{figure}
+\end{algorithm}
 
 \section{Program Listings}
 
-You may have noticed that I used the \verb|lstlisting| environment to typeset some of the \LaTeX{} examples -- with pretty-printing\footnote{Whether you agree that it \emph{is} pretty is another story altogether.}, too, including automatic line-breaking.  For more information, see the documentation for the \verb|listings| package: it's in the \verb|doc/latex/listings| subdirectory of your \LaTeX\ installation directory.
+You may have noticed that I used the \verb|lstlisting| environment to typeset some of the \LaTeX{} examples -- with pretty-printing\footnote{Whether you agree that it \emph{is} pretty is another story altogether.}, too, including automatic line-breaking.  For more information, see the documentation for the \verb|listings| package: it's available online at \url{http://www.texdoc.net/pkg/listings}.
 
 Just to give some simple example here.  For example, to typeset a ``Hello World'' Java program with syntax highlighting, you can use the following code:
 

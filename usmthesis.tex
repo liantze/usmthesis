@@ -1,10 +1,15 @@
-\documentclass[urlsf]{usmthesis}
+%% If you prefer -- and have been allowed -- to use
+%% Arial, then
+%% \documentclass[arial]{usmthesis}
+%% It's not really Arial, it's a Helvetica look-alike,
+%% but if you're not a designer nor a typographer, you
+%% probably can't tell the difference (I can't either)
+\documentclass{usmthesis}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% This is usmthesis.tex, Nov 27 2007.
-% Created by Lim Lian Tze,
-% Computer Aided Translation Unit,
-% School of Computer Sciences, 
-% Universiti Sains Malaysia, Penang, Malaysia.
+% This is usmthesis.tex, Aug 27 2015.
+% Created by Lim Lian Tze (Ph.D.)
+% liantze@gmail.com
+% http://liantze.penguinattack.org.
 %
 % This is the "main" file for the thesis, 
 % formatted according to the Guide to the 
@@ -17,6 +22,23 @@
 %% smiley face with the command \Smiley.
 \usepackage{marvosym}
 
+%% Also, the enumitem package is great for customising
+%% list environments.
+\usepackage{enumitem}
+
+%% Listings is a nice package for typesetting code
+%% listings. Other possible packages include fancyvrb,
+%% minted, etc.
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily,breaklines=true}
+
+%% For those who need to produce algorithms and pseudocode.
+%% There are a number of different packages available, but
+%% unfortunately they tend not to work well together!
+%% I'm using algorithmicx, specifically algpseucode, here.
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+
 %% Enter particulars about your thesis HERE
 % Your Name
 \author{Lim Lian Tze}
@@ -25,12 +47,12 @@
 % Malay title of your thesis
 \titlems{Penulisan Tesis dengan LaTeX}
 % Year submitted
-\submityear{2007}
+\submityear{2015}
 % Month submitted
 \submitmonth{December}
 %% Choose only 1 degree type! :-)
-%\degreetype{Doctor of Philosphy}
-\degreetype{Master of Science}
+\degreetype{Doctor of Philosphy}
+% \degreetype{Master of Science}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -74,6 +96,7 @@
 % different citation style.  Also see the natbib documentation.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \bibpunct{(}{)}{;}{a}{,}{,}
+\usepackage{ragged2e}
 \begin{document}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -90,17 +113,7 @@
 %\bibliographystyle{plainnat}
 %\bibliographystyleown{plainnat}
 
-
-\lstset{fontadjust=true}
-
 \frontmatter
-
-\addtocontents{lof}{\protect\raggedright\protect\sloppy}
-\addtocontents{lof}{\protect\hfill{\protect\bfseries Page}\\}
-\addtocontents{lot}{\protect\raggedright\protect\sloppy}
-\addtocontents{lot}{\protect\hfill{\protect\bfseries Page}\\}
-\addtocontents{lop}{\protect\raggedright\protect\sloppy}
-\addtocontents{lop}{\protect\hfill{\protect\bfseries Page}\\}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Inserts the cover page (the hard cover with gold-lettering)
@@ -110,32 +123,26 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Inserts a "Front Matter" bookmark if using pdfLaTeX
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\ifpdf
-    \pdfbookmark[-1]{Front Matter}{front}
-\else\fi
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % MAKE SURE YOU HAVE A acknowledgements.tex FILE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \include{acknowledgements}
 
-
-\renewcommand\contentsname{Table of Contents}
 \begin{singlespace}
 \tableofcontents \clearpage
 \listoftables \clearpage
 \listoffigures \clearpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% You can comment out the following line if you don't
+% have a "List of Plates"
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \listofplates \clearpage
-\end{singlespace}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % You can comment out the following line if you don't
 % have a "List of Acronyms"
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \include{loa}
-
+\end{singlespace}
 
 % Paragraph spacing
 \setlength\parskip{18pt}
@@ -143,18 +150,22 @@
 \setlength\intextsep{24pt}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% The list of own publications.  If you don't have one, you may
+% comment out the next 4 lines.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\nociteown{lim:2007,lim:latextypesetting}
+\begin{singlespace}
+\bibliographyown{mybib}
+\end{singlespace}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Your Malay and English abstracts, each in one file.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \input{abs-mal}
 \input{abs-eng}
 
-\addtocontents{toc}{\protect\setlength{\protect\cftbeforechapskip}{2.5pc}}
-\addtocontents{toc}{\protect\cftpagenumbersoff{chap}}
  
 \mainmatter
-\ifpdf
-  \pdfbookmark[-1]{Main Chapters}{main}
-\else\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % The actual chapters of your thesis as listed in 
@@ -171,13 +182,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \input{mainchaps}
 
-\addtocontents{toc}{\protect\cftpagenumberson{chap}}
-
-%\ifpdf
-%  \pdfbookmark[-1]{Back Matter}{back}
-%\else\fi
-
-\begin{singlespace}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % The bibliography.
 % You can create mybib.bib with JabRef, the program included
@@ -185,9 +189,6 @@
 % http://jabref.sourceforge.net/
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \bibliography{mybib}
-\end{singlespace}
-
-\addtocontents{toc}{\protect\setlength{\protect\cftbeforechapskip}{1pc}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -195,29 +196,6 @@
 % If you don't have any, you may delete everything below,
 % until and including \input{appendices}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\clearpage
 \appendix
-\phantomsection\addcontentsline{toc}{part}{\texorpdfstring{\uppercase{Appendices}}{Appendices}}
-\thispagestyle{empty}
-\vspace*{\stretch{1}}
-  \begin{center}
-    {\Huge\bfseries APPENDICES}
-  \end{center}
-\vspace*{\stretch{2}}
-\addtocontents{toc}{\protect\renewcommand{\protect\chaptername}{\appendixname}} 
-\addtocontents{toc}{\protect\setlength\cftchapnumwidth{7pc}}
-
-\renewcommand\chaptername{\appendixname}
 \input{appendices}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% The list of own publications.  If you don't have one, you may
-% comment out the next 3 lines (up till just before \end{singlespace}.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\nociteown{lim:2007,lim:latextypesetting}
-\addtocontents{toc}{\protect\setlength{\protect\cftbeforechapskip}{3pc}}
-\begin{singlespace}
-\bibliographyown{mybib}
-\end{singlespace}
-
 \end{document}

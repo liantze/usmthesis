@@ -37,7 +37,7 @@ The basic citation commands are \verb|\citet| and \verb|\citep|, which stands fo
 Author-year styles include those in the Harvard package, such as \texttt{agsm, dcu, kluwer} and others.
 If you're using an author-year system, like I did for this sample thesis, you get the following:
 
-\begin{compactitem}
+\begin{itemize}[nosep]
 \item \verb|\citet{latex:companion}| $\to$ \citet{latex:companion}
 \item \verb|\citet[chap.~2]{latex:companion}| $\to$ \citet[chap.~2]{latex:companion}
 \item \verb|\citep{latex:companion}| $\to$ \citep{latex:companion}
@@ -46,35 +46,36 @@ If you're using an author-year system, like I did for this sample thesis, you ge
 \item \verb|\citep[see also][chap.~2]{latex:companion}| $\to$ \citep[see also][chap.~2]{latex:companion}
 \item \verb|\citet{latex:companion,roberts}| $\to$ \citet{latex:companion,roberts}
 \item \verb|\citep{latex:companion,roberts}| $\to$ \citep{latex:companion,roberts}
-\end{compactitem}
+\end{itemize}
 
 You may also want to write only the author's name or year occassionally:
 
-\begin{compactitem}
+\begin{itemize}[nosep]
 \item \verb|\citeauthor{latex:companion}| $\to$ \citeauthor{latex:companion}
 \item \verb|\citeyear{latex:companion}| $\to$ \citeyear{latex:companion}
-\item \verb|\citeyearpar{latex:companion}| $\to$ \citeyearpar{latex:companion}\end{compactitem}
+\item \verb|\citeyearpar{latex:companion}| $\to$ \citeyearpar{latex:companion}
+\end{itemize}
 
 \subsection{Numeric System}
 
 If you prefer the plain, numerical system, do the following steps first:
-\begin{compactenum}
+\begin{enumerate}[nosep]
   \item In \texttt{usmthesis.cls}, search for the line \verb|\RequirePackage{natbib}| and modify it to:\\
   \verb|\RequirePackage[numbers]{natbib}|
   \item In \texttt{usmthesis.tex}:
-  \begin{compactitem}
+  \begin{itemize}[nosep]
     \item comment out the line starting with \verb|\citestyle{...}|
     \item modify the \verb|biblography| styles to: \\
       \verb|\bibliographystyle{plainnat}| \\
       \verb|\bibliographystyleown{plainnat}|
-    \end{compactitem}
+    \end{itemize}
     or any other number system style that you prefer.
-\end{compactenum}
+\end{enumerate}
 
 You will then get the following citation outputs: 
 
 
-\begin{compactitem}
+\begin{itemize}[nosep]
 \item \verb|\citet{latex:companion}| $\to$ Mittelbach et al. [1]
 \item \verb|\citet[chap.~2]{latex:companion}| $\to$ Mittelbach et al. [1, chap.~2]
 \item \verb|\citep{latex:companion}| $\to$ [1]
@@ -86,4 +87,4 @@ You will then get the following citation outputs:
 \item \verb|\citeauthor{latex:companion}| $\to$ Mittelbach et al.
 \item \verb|\citeyear{latex:companion}| $\to$ 2004
 \item \verb|\citeyearpar{latex:companion}| $\to$ [2004]
-\end{compactitem}
+\end{itemize}

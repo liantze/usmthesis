@@ -1,5 +1,4 @@
-%%
-%% usmthesis.cls 2015/05/12 version V1.5
+%% usmthesis.cls 2015/08/21 version V1.6
 %% 
 %% NOTE: This text file uses UNIX line feed conventions. When (human)
 %% reading this file on other platforms, you may have to use a text
@@ -24,13 +23,24 @@
 %% I'll always try.
 %%
 %%
-%% Copyright (c) 2005-2015 by Lim Lian Tze
+%% Copyright (c) 2005-2015 by Lim Lian Tze (OH MY HAS IT BEEN THAT LONG)
 %%
 %% Current maintainer: Lim Lian Tze (liantze@gmail.com)
 %
 %  BRIEF CHANGELOG
 %  ===============
-% v1.5 Apr 12 2015
+% v1.6 Aug 21 2015
+%     - (Based on feedback from Puan Nurul Hasyda of IPS)
+%     - Chapters are now in bold in the TOC.
+%     - Eliminated vertical spaces at the top and bottom of cover and 
+%       title page.
+%     - Apparently if using Times, must be in 12pt. So no more 11pt,
+%       12pt choices. But sans serif (Arial) is allowed again, but must
+%       be at 11pt.
+%     - Instead, the "times" option loads mathptmx 12pt as body font,
+%       and "arial" option loads "helvet" 11pt as body font.
+%
+% v1.5 Apr 16 2015
 %     - Thesis titles in abstracts are now double-spaced if >1 lines, and
 %       are smaller than the "Abstract"/"Abstrak" keywords.
 %
@@ -108,7 +118,7 @@
 %   The default is noboxfig.
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{usmthesis}[2015/04/14 version V1.4]
+\ProvidesClass{usmthesis}[2015/08/21 version 1.6]
 
 % switches for URL font
 \newif\if@urltt
@@ -117,6 +127,11 @@
 
 % switch for border around figures
 \newif\if@boxfig
+
+% Added August 2015: times or arial as thesisfont
+\newif\if@timesthesis
+\DeclareOption{times}{\@timesthesistrue}
+\DeclareOption{arial}{\@timesthesisfalse}
 
 \DeclareOption{urltt}{\@urltttrue\@urlrmfalse\@urlsffalse}
 \DeclareOption{urlsf}{\@urlsftrue\@urlttfalse\@urlrmfalse}
@@ -127,16 +142,34 @@
 
 %\DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
 \DeclareOption{10pt}{\OptionNotUsed}
-\DeclareOption{11pt}{\PassOptionsToClass{\CurrentOption}{book}}
-\DeclareOption{12pt}{\PassOptionsToClass{\CurrentOption}{book}}
+\DeclareOption{11pt}{\OptionNotUsed}
+\DeclareOption{12pt}{\OptionNotUsed}
+%\DeclareOption{11pt}{\PassOptionsToClass{\CurrentOption}{book}}
+%\DeclareOption{12pt}{\PassOptionsToClass{\CurrentOption}{book}}
 
-\ExecuteOptions{urltt,noboxfig}
+\ExecuteOptions{times,urltt,noboxfig}
 \ProcessOptions
 
-\LoadClass[a4paper,oneside,11pt]{book}
-
-%\RequirePackage[utf8]{inputenc}
+\RequirePackage{etoolbox}
+\RequirePackage[utf8]{inputenc}
 \RequirePackage[T1]{fontenc}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Sets up the fonts: Load the Times, Helvetica and 
+%% Courier (or TX Typewriter) fonts for serif, sans serif
+%% and typewriter respectively.
+%% (Helvetica is loaded in lieu of Arial, which is
+%% commercial.)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{mathptmx}
+\RequirePackage{helvet}
+\renewcommand{\ttdefault}{lmtt}
+
+\if@timesthesis
+  \LoadClass[a4paper,oneside,12pt]{book}
+\else
+  \LoadClass[a4paper,oneside,11pt]{book}
+  \renewcommand\familydefault{\sfdefault}
+\fi
 
 \RequirePackage{ifpdf}
 
@@ -146,12 +179,10 @@
 \RequirePackage{graphicx}
 \RequirePackage[a4paper,top=25mm,bottom=25mm,left=40mm,right=25mm,footskip=15mm]{geometry}
 
-\ifpdf
-\pdfcompresslevel=9
-\else
-\fi
+\ifpdf\pdfcompresslevel=9\else\fi
 
 \RequirePackage[listofformat=parens]{subfig}
+%\RequirePackage{subfigure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % When "bahasa" is specified last, all the sectioning 
@@ -183,18 +214,6 @@
 \RequirePackage{amsmath,amssymb,textcomp}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Sets up the fonts: Load the Times, Helvetica and 
-%% Courier (or TX Typewriter) fonts for serif, sans serif
-%% and typewriter respectively.
-%% (Helvetica is loaded in lieu of Arial, which is
-%% commercial.)
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage{mathptmx}\RequirePackage[scaled=.92]{helvet}\renewcommand{\rmdefault}{ptm}\renewcommand{\sfdefault}{phv}
-\renewcommand{\ttdefault}{txtt}
-\normalfont\selectfont
-%\RequirePackage{txfonts}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % For including the TOC in the TOC.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -206,7 +225,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage{titlesec}
 % chapters
-\titleformat{\chapter}[display]{\filcenter\bfseries}{\large\MakeUppercase{\chaptername{} \thechapter}}{-1.7pc}{\begin{singlespace}\bfseries\Large\MakeUppercase}[\end{singlespace}]
+%% Aug 2015: Chapter heading sizes must be FIXED at 14pt, according to IPS.
+\titleformat{\chapter}[display]{\filcenter\bfseries}{\fontsize{14pt}{16pt}\selectfont\MakeUppercase{\chaptername{} \thechapter}}{-1.7pc}{\begin{singlespace}\bfseries\fontsize{14pt}{16pt}\selectfont\MakeUppercase}[\end{singlespace}]
+
 %\titlespacing*{\chapter}{0pt}{*-4.5}{*6}
 \titlespacing*{\chapter}{0pt}{*-4.5}{*4}
 % section e.g. 4.1
@@ -223,10 +244,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Formatting of the TOC, LOF and LOT
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage[titles,subfigure]{tocloft}
 \setcounter{lofdepth}{2}
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{3}
-\RequirePackage[titles,subfigure]{tocloft}
 
 % Introducing: List of Plates
 \newcommand{\listplatename}{List of Plates}
@@ -263,9 +284,8 @@
 \renewcommand\cftchapdotsep{1}
 \renewcommand\cftchapleader{\normalfont\cftdotfill{\cftchapdotsep}}
 \renewcommand\cftchappresnum{\MakeUppercase{\chaptername} }
-\renewcommand\cftchapaftersnum{\; -- }
-\setlength\cftchapnumwidth{6.5pc}
-
+\renewcommand\cftchapaftersnum{\; --\; }
+\newlength\tmplength
 
 \renewcommand\cftfigpresnum{Figure }
 \cftsetindents{fig}{0pt}{6.2pc}
@@ -274,8 +294,9 @@
 
 \renewcommand\cftsubfigpresnum{Figure }
 \cftsetindents{subfig}{0pt}{6.2pc}
-\renewcommand\cftsubfigdotsep{\cftnodots}
+\renewcommand\cftsubfigleader{\hfill}
 %\renewcommand\cftsubfigpagefont{\bfseries}
+%\renewcommand\cftfigfont{\mdseries\justifying}
 
 \renewcommand\cfttabpresnum{Table }
 \cftsetindents{tab}{0pt}{6.2pc}
@@ -316,19 +337,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % For more compact-looking lists
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage{paralist}
+%\RequirePackage{paralist}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% For typesetting algorithms.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage{algorithmic}
-\renewcommand{\algorithmiccomment}[1]{\qquad\textrm{\small /**#1**/}}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% For typesetting code as-is.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage{fancyvrb}
-\RequirePackage{listings}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % This package will help you in typesetting urls!
@@ -351,20 +361,27 @@
 \renewcommand*{\acffont}[1]{\rmfamily #1}
 
 %% Apr 14, 2015: cater for new acronym.sty
-%\renewenvironment{AC@deflist}[1]%
-%        {\ifAC@nolist%
-%         \else%
-%            \raggedright\begin{list}{}%
-%                {\settowidth{\labelwidth}{\textbf{\textrm{#1}}}%
-%                \setlength{\leftmargin}{\labelwidth}%
-%                \addtolength{\leftmargin}{\labelsep}%
-%                \renewcommand{\makelabel}{\bflabel}}%
-%          \fi}%
-%        {\ifAC@nolist%
-%         \else%
-%            \end{list}%
-%         \fi}
-\renewcommand*{\aclabelfont}[1]{\textbf{\acsfont{#1}}}
+%% Sep 10, 2015: make everything backward compatible
+\@ifpackagelater{acronym}{2014/08/01}
+{%
+  % New acronym.sty works with the following
+  \renewcommand*{\aclabelfont}[1]{\textbf{\acsfont{#1}}}
+}
+{%
+  \renewenvironment{AC@deflist}[1]%
+    {\ifAC@nolist%
+     \else%
+        \raggedright\begin{list}{}%
+            {\settowidth{\labelwidth}{\textbf{\textrm{#1}}}%
+            \setlength{\leftmargin}{\labelwidth}%
+            \addtolength{\leftmargin}{\labelsep}%
+            \renewcommand{\makelabel}{\bflabel}}%
+      \fi}%
+    {\ifAC@nolist%
+     \else%
+        \end{list}%
+     \fi}
+}%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Table-related packages
@@ -378,7 +395,7 @@
 %\RequirePackage{apacite}
 \RequirePackage{natbib}
 \addto\captionsenglish{%
-\renewcommand{\bibname}{References}
+\renewcommand{\bibname}{REFERENCES}
 }
 \setlength\bibsep{1em}
 \setlength\bibhang{1.5em}
@@ -438,7 +455,7 @@
 %% Creates the first two cover pages
 \newcommand\makecover{%
 \begin{titlepage} \centering\fontsize{18pt}{20pt}\selectfont\bfseries{%
-\vspace*{10mm}
+%\vspace*{10mm}
 %
 {\singlespace\fontsize{18pt}{20pt}\selectfont\MakeUppercase{\@title}\par}
 %
@@ -452,14 +469,14 @@ UNIVERSITI SAINS MALAYSIA\par
 
 \@submityear 
 %
-\vspace*{20mm}
+%\vspace*{20mm}
 }
 
 \end{titlepage}
 
 
 \thispagestyle{empty}{\centering\bfseries
-\vspace*{15mm}
+%\vspace*{15mm}
 
 {\MakeUppercase{\fontsize{18pt}{20pt}\selectfont\@title}\par}
 
@@ -483,20 +500,85 @@ for the degree of\\
 
 {\fontsize{18pt}{20pt}\selectfont\@submitmonth \ \@submityear }\par
 
-\vspace*{20mm}
+%\vspace*{20mm}
 }
 \clearpage}
 
 
 %% English environment
 \newenvironment{EnAbstract}
-  {\chapter[Abstract]{\linespread{2}\large\@title}%
+  { \titleformat{\chapter}[display]{\filcenter\bfseries}{\fontsize{14pt}{16pt}\selectfont\MakeUppercase{\chaptername{} \thechapter}}{-1.7pc}{\linespread{2}\bfseries\fontsize{14pt}{16pt}\selectfont\MakeUppercase}
+    \chapter[Abstract]{\linespread{2}\large\@title}%
     \begin{center}{\Large\bfseries ABSTRACT}\end{center}\ignorespaces}
   {\ignorespacesafterend}
 
 %% Malay abstract environment
 \newenvironment{MsAbstract}
   {\begin{otherlanguage}{bahasam}%
+    \titleformat{\chapter}[display]{\filcenter\bfseries}{\fontsize{14pt}{16pt}\selectfont\MakeUppercase{\chaptername{} \thechapter}}{-1.7pc}{\linespread{2}\bfseries\fontsize{14pt}{16pt}\selectfont\MakeUppercase}
     \chapter[Abstrak]{\linespread{2}\large\@titlems}%
     \begin{center}{\Large\bfseries ABSTRAK}\end{center}\ignorespaces}
   {\end{otherlanguage}\ignorespacesafterend}
+
+\apptocmd{\frontmatter}{%
+  \addtocontents{toc}{\protect\raggedright\protect\sloppy}
+  \addtocontents{toc}{\protect\hfill{\protect\bfseries Page}\\}
+  \addtocontents{lof}{\protect\raggedright\protect\sloppy}
+  \addtocontents{lof}{\protect\hfill{\protect\bfseries Page}\\}
+  \addtocontents{lot}{\protect\raggedright\protect\sloppy}
+  \addtocontents{lot}{\protect\hfill{\protect\bfseries Page}\\}
+  \addtocontents{lop}{\protect\raggedright\protect\sloppy}
+  \addtocontents{lop}{\protect\hfill{\protect\bfseries Page}\\}
+  \renewcommand\contentsname{Table of Contents}
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  % Inserts a "Front Matter" bookmark if using pdfLaTeX
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \ifpdf
+      \pdfbookmark[-1]{Front Matter}{front}
+  \else\fi
+  \renewcommand{\thechapter}{\arabic{chapter}}
+}{}{}
+
+\pretocmd{\mainmatter}{%
+  \addtocontents{toc}{\protect\setlength{\protect\cftbeforechapskip}{2.5pc}}
+  \addtocontents{toc}{\protect\cftpagenumbersoff{chap}}
+  \addtocontents{toc}{\protect\renewcommand\protect\cftchapfont{\protect\bfseries}}
+}{}{}
+
+\apptocmd{\mainmatter}{%
+  \ifpdf\pdfbookmark[-1]{Main Chapters}{main}\else\fi
+}{}{}
+
+\pretocmd{\bibliography}{%
+  \addtocontents{toc}{\protect\cftpagenumberson{chap}}
+  \begin{singlespace}
+}{}{}
+
+\apptocmd{\bibliography}{%
+  \end{singlespace}
+  \clearpage
+}{}{}
+
+\pretocmd{\appendix}{%
+  \clearpage
+  \addtocontents{toc}{\protect\setlength{\protect\cftbeforechapskip}{1pc}}
+}{}{}
+
+\AtBeginDocument{
+\settowidth{\tmplength}{\bfseries\MakeUppercase{\chaptername}\space9\cftchapaftersnum}
+\setlength\cftchapnumwidth{\tmplength}
+\apptocmd{\appendix}{%
+  \phantomsection\addcontentsline{toc}{part}{\texorpdfstring{\bfseries\uppercase{Appendices}}{Appendices}}
+  \thispagestyle{empty}
+  \vspace*{\stretch{1}}
+    \begin{center}
+      {\Huge\bfseries APPENDICES}
+    \end{center}
+  \vspace*{\stretch{2}}
+  \addtocontents{toc}{\protect\renewcommand{\protect\chaptername}{\appendixname}}
+  \settowidth{\tmplength}{\bfseries\MakeUppercase{\appendixname}\space N\cftchapaftersnum}
+  \addtocontents{toc}{\protect\setlength{\cftchapnumwidth}{\the\tmplength}}
+  \renewcommand\chaptername{\appendixname}
+}{}{}
+}
