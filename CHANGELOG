@@ -1,5 +1,10 @@
 BRIEF CHANGELOG
 ===============
+v1.61 Sep 22 2015
+    - Abstract titles are now 12pt (irrespective of the font being used)
+    - Default bibliography style is now APA
+      (with \RequirePackage[natbibapa]{apacite})
+
 v1.6 Aug 21 2015
     - (Based on feedback from Puan Nurul Hasyda of IPS)
     - Chapters are now in bold in the TOC.

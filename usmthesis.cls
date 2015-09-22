@@ -1,4 +1,4 @@
-%% usmthesis.cls 2015/08/21 version V1.6
+%% usmthesis.cls 2015/09/22 version V1.61
 %% 
 %% NOTE: This text file uses UNIX line feed conventions. When (human)
 %% reading this file on other platforms, you may have to use a text
@@ -29,6 +29,11 @@
 %
 %  BRIEF CHANGELOG
 %  ===============
+% v1.61 Sep 22 2015
+%     - Abstract titles are now 12pt (irrespective of the font being used)
+%     - Default bibliography style is now APA 
+%       (with \RequirePackage[natbibapa]{apacite})
+%
 % v1.6 Aug 21 2015
 %     - (Based on feedback from Puan Nurul Hasyda of IPS)
 %     - Chapters are now in bold in the TOC.
@@ -389,11 +394,10 @@
 \RequirePackage{tabularx,colortbl,dcolumn}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% For flexible bibliographic citations
+% Loads apacite and natbib by defualt
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\RequirePackage[numbers]{natbib}
-%\RequirePackage{apacite}
-\RequirePackage{natbib}
+\RequirePackage[natbibapa]{apacite}
 \addto\captionsenglish{%
 \renewcommand{\bibname}{REFERENCES}
 }
@@ -478,7 +482,7 @@ UNIVERSITI SAINS MALAYSIA\par
 \thispagestyle{empty}{\centering\bfseries
 %\vspace*{15mm}
 
-{\MakeUppercase{\fontsize{18pt}{20pt}\selectfont\@title}\par}
+{\singlespace\fontsize{18pt}{20pt}\selectfont\MakeUppercase{\@title}\par}
 
 \vspace*{\stretch{2}}
 
@@ -507,17 +511,17 @@ for the degree of\\
 
 %% English environment
 \newenvironment{EnAbstract}
-  { \titleformat{\chapter}[display]{\filcenter\bfseries}{\fontsize{14pt}{16pt}\selectfont\MakeUppercase{\chaptername{} \thechapter}}{-1.7pc}{\linespread{2}\bfseries\fontsize{14pt}{16pt}\selectfont\MakeUppercase}
-    \chapter[Abstract]{\linespread{2}\large\@title}%
-    \begin{center}{\Large\bfseries ABSTRACT}\end{center}\ignorespaces}
+  { \titleformat{\chapter}[display]{\filcenter\bfseries}{\fontsize{12pt}{14pt}\selectfont\MakeUppercase{\chaptername{} \thechapter}}{-1.7pc}{\linespread{2}\bfseries\fontsize{12pt}{14pt}\selectfont\MakeUppercase}
+    \chapter[Abstract]{\@title}%
+    \begin{center}{\fontsize{12pt}{14pt}\bfseries\selectfont ABSTRACT}\end{center}\ignorespaces}
   {\ignorespacesafterend}
 
 %% Malay abstract environment
 \newenvironment{MsAbstract}
   {\begin{otherlanguage}{bahasam}%
-    \titleformat{\chapter}[display]{\filcenter\bfseries}{\fontsize{14pt}{16pt}\selectfont\MakeUppercase{\chaptername{} \thechapter}}{-1.7pc}{\linespread{2}\bfseries\fontsize{14pt}{16pt}\selectfont\MakeUppercase}
-    \chapter[Abstrak]{\linespread{2}\large\@titlems}%
-    \begin{center}{\Large\bfseries ABSTRAK}\end{center}\ignorespaces}
+    \titleformat{\chapter}[display]{\filcenter\bfseries}{\fontsize{12pt}{14pt}\selectfont\MakeUppercase{\chaptername{} \thechapter}}{-1.7pc}{\linespread{2}\bfseries\fontsize{12pt}{14pt}\selectfont\MakeUppercase}
+    \chapter[Abstrak]{\@titlems}%
+    \begin{center}{\fontsize{12pt}{14pt}\bfseries\selectfont ABSTRAK}\end{center}\ignorespaces}
   {\end{otherlanguage}\ignorespacesafterend}
 
 \apptocmd{\frontmatter}{%

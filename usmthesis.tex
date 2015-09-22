@@ -43,7 +43,7 @@
 % Your Name
 \author{Lim Lian Tze}
 % English title of your thesis
-\title{Writing Your Thesis with LaTeX}
+\title{Writing Your Thesis with LaTeX with a Very, Very, Very Long Title}
 % Malay title of your thesis
 \titlems{Penulisan Tesis dengan LaTeX}
 % Year submitted
@@ -73,43 +73,19 @@
   \usepackage[dvips,plainpages=false,bookmarksnumbered,breaklinks=true]{hyperref}
 \fi
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% As we have loaded the natbib package, you can customise
-% the citation style to some extent.  The following line
-% specifies some standard punctuations:
-%
-% \bibpunct{#1}{#2}{#3}{#4}{#5}{#6}
-% #1: open punctuation (a round bracket here)
-% #2: close punctuation (a round bracket here)
-% #3: punctuation separating multiple authors (a semi-colon here)
-% #4: n - citation using numerical system
-%     s - numeric superscript system
-%     any other letter - author-year system
-% #5: punctuation separating author name(s) from year
-% #6: punctuation separating years for multiple citations
-%     with same author(s)
-%
-% The default citation that I used here is therefore of the form
-% (Wilks and Stevenson, 1999; Somers, 2000)
-%
-% You may change any of the 6 parameters if you prefer a
-% different citation style.  Also see the natbib documentation.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\bibpunct{(}{)}{;}{a}{,}{,}
 \usepackage{ragged2e}
 \begin{document}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% You can choose from several bibliography styles. I'm using
-% the author-year system with agsm for the bibliography
-% entries here, but feel free to experiment with other styles.
+% Default bibliography style is apa (using 
+% \RequirePackage[natbibapa]{apacite} in the class file).
 %
 % If you prefer the number system though, use bibliography
 % style "plainnat" for [1][2][3] or "alpha" for [Jon94] (the label
 % will be auto-generated).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\bibliographystyle{dcu}
-\bibliographystyleown{dcu}
+\bibliographystyle{apacite}
+\bibliographystyleown{apacite}
 %\bibliographystyle{plainnat}
 %\bibliographystyleown{plainnat}
 

@@ -9,7 +9,7 @@ First of all, bear in mind that your bibliography file (\verb|*.bib| files) is l
 \begin{figure}[htb!]
 \begin{lstlisting}[language={}]
 @BOOK{latex:companion,
-  title = {The \LaTeX{} Companion},
+  title = {The {\LaTeX} Companion},
   publisher = {Addison-Wesley},
   year = {2004},
   author = {Frank Mittelbach and Michel Goosens and Johannes Braams and David Carlisle and Chris Rowley},
@@ -26,16 +26,15 @@ As an example, in \verb|mybib.bib| I created a Bib\TeX{} entry with JabRef, the 
 One thing to note about authors' names: Bib\TeX{} recognises ``Mittelbach'' as the last name for both \texttt{Frank Mittelbach} and \texttt{Mittelbach, Frank}.  So for a name like ``Lim Lian Tze'', you would have to specify it as either \texttt{Lian Tze Lim} or \texttt{Lim, Lian Tze} for Bib\TeX{} to recognise ``Lim'' as the last name correctly.  In addition, if the surname or family name of an author consists of multiple words, enclose it with braces to avoid surprises, like so: \texttt{Syed Muhammad Naquib \{al-Attas\}}.
 
 \section{Citations using the \texttt{natbib} package}
-The \verb|usmthesis| package imports the \verb|natbib| package which provides flexible citation mechanisms, so see its documentation for more details.  On a MiK\TeX{} or Pro\TeX{}t installation,
+The \verb|usmthesis| package imports the \verb|natbib| and \verb|apacite| package which provides flexible citation mechanisms, so see its documentation for more details.  On a MiK\TeX{} installation,
 % it should be in \url{texmf/doc/latex/natbib/natbib.dvi} or \url{natbib.pdf}, in the path where you installed MiKTeX. 
-use the command prompt to issue \lstinline|mthelp --view natbib| to access the documentation.
-On teTeX, simply type \verb|texdoc natbib| and the documentation will be displayed automatically, if it's found on your machine.
+use the command prompt to issue \lstinline|mthelp --view natbib| and \lstinline|mthelp --view apacite| to access the documentation.
+On TeXLive, simply type \verb|texdoc natbib| and \lstinline|texdoc apacite| and the documentation will be displayed automatically, if it's found on your machine.
 
 The basic citation commands are \verb|\citet| and \verb|\citep|, which stands for \emph{textual} and \emph{parenthetical} citation respectively.  They take extra arguments, too, for adding notes in the citations.  
 
 \subsection{Author-Year System}
-Author-year styles include those in the Harvard package, such as \texttt{agsm, dcu, kluwer} and others.
-If you're using an author-year system, like I did for this sample thesis, you get the following:
+The default bibliography style is APA:
 
 \begin{itemize}[nosep]
 \item \verb|\citet{latex:companion}| $\to$ \citet{latex:companion}
@@ -60,11 +59,10 @@ You may also want to write only the author's name or year occassionally:
 
 If you prefer the plain, numerical system, do the following steps first:
 \begin{enumerate}[nosep]
-  \item In \texttt{usmthesis.cls}, search for the line \verb|\RequirePackage{natbib}| and modify it to:\\
+  \item In \texttt{usmthesis.cls}, search for the line \verb|\RequirePackage[natbibapa]{apacite}| and modify it to:\\
   \verb|\RequirePackage[numbers]{natbib}|
   \item In \texttt{usmthesis.tex}:
   \begin{itemize}[nosep]
-    \item comment out the line starting with \verb|\citestyle{...}|
     \item modify the \verb|biblography| styles to: \\
       \verb|\bibliographystyle{plainnat}| \\
       \verb|\bibliographystyleown{plainnat}|
