@@ -1,4 +1,4 @@
-%% usmthesis.cls 2015/09/22 version V1.61
+%% usmthesis.cls 2016/02/17 version V1.62
 %% 
 %% NOTE: This text file uses UNIX line feed conventions. When (human)
 %% reading this file on other platforms, you may have to use a text
@@ -23,18 +23,22 @@
 %% I'll always try.
 %%
 %%
-%% Copyright (c) 2005-2015 by Lim Lian Tze (OH MY HAS IT BEEN THAT LONG)
+%% Copyright (c) 2005-2016 by Lim Lian Tze (OH MY GOODNESS HAS IT BEEN THAT LONG)
 %%
 %% Current maintainer: Lim Lian Tze (liantze@gmail.com)
 %
 %  BRIEF CHANGELOG
 %  ===============
-% v1.61 Sep 22 2015
+%  v1.62 Feb 17 2016
+%     - Turn off page numbering for appendices in the ToC
+%     - Appendix chapters are un-bold in the ToC now
+%
+%  v1.61 Sep 22 2015
 %     - Abstract titles are now 12pt (irrespective of the font being used)
 %     - Default bibliography style is now APA 
 %       (with \RequirePackage[natbibapa]{apacite})
 %
-% v1.6 Aug 21 2015
+%  v1.6 Aug 21 2015
 %     - (Based on feedback from Puan Nurul Hasyda of IPS)
 %     - Chapters are now in bold in the TOC.
 %     - Eliminated vertical spaces at the top and bottom of cover and 
@@ -45,17 +49,17 @@
 %     - Instead, the "times" option loads mathptmx 12pt as body font,
 %       and "arial" option loads "helvet" 11pt as body font.
 %
-% v1.5 Apr 16 2015
+%  v1.5 Apr 16 2015
 %     - Thesis titles in abstracts are now double-spaced if >1 lines, and
 %       are smaller than the "Abstract"/"Abstrak" keywords.
 %
-% v1.4 Apr 14 2015
+%  v1.4 Apr 14 2015
 %     - Now works with updated acronym package.
 %     - Finally using bahasam babel option (and removed the french language,
 %       couldn't remember why I didn't remove it after some personal tests).
 %     - Page numbers in content lists are now unbold (requested by IPS).
 %
-% v1.3 May 12 2012
+%  v1.3 May 12 2012
 %     - Refined spacing in bibliography list and after chapter heading
 %     - Fixed font size in cover (from 17pt to 18pt)
 %     - User can now specify preferred document body font size (11pt or 12pt)
@@ -566,7 +570,13 @@ for the degree of\\
 
 \pretocmd{\appendix}{%
   \clearpage
+  \addtocontents{toc}{\protect\cftpagenumbersoff{part}}
+  \addtocontents{toc}{\protect\cftpagenumbersoff{chapter}}
   \addtocontents{toc}{\protect\setlength{\protect\cftbeforechapskip}{1pc}}
+}{}{}
+
+\apptocmd{\appendix}{
+  \addtocontents{toc}{\protect\renewcommand\protect\cftchapfont{\protect\mdseries}}
 }{}{}
 
 \AtBeginDocument{

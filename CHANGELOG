@@ -1,5 +1,9 @@
 BRIEF CHANGELOG
 ===============
+v1.62 Feb 17 2016
+    - Turn off page numbering for appendices in the ToC
+    - Appendix chapters are un-bold in the ToC now
+
 v1.61 Sep 22 2015
     - Abstract titles are now 12pt (irrespective of the font being used)
     - Default bibliography style is now APA
