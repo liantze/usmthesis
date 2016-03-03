@@ -1,5 +1,9 @@
 BRIEF CHANGELOG
 ===============
+v1.63 Mar 3 2016
+    - Moved List of Publications to after Appendices
+    - References heading has 5cm top margin
+
 v1.62 Feb 17 2016
     - Turn off page numbering for appendices in the ToC
     - Appendix chapters are un-bold in the ToC now

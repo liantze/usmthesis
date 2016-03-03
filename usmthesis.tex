@@ -126,15 +126,6 @@
 \setlength\intextsep{24pt}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% The list of own publications.  If you don't have one, you may
-% comment out the next 4 lines.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\nociteown{lim:2007,lim:latextypesetting}
-\begin{singlespace}
-\bibliographyown{mybib}
-\end{singlespace}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Your Malay and English abstracts, each in one file.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \input{abs-mal}
@@ -164,6 +155,7 @@
 % in the Colloquium05 CD-ROM.  Or download from
 % http://jabref.sourceforge.net/
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titlespacing*{\chapter}{0pt}{25mm}{\baselineskip}
 \bibliography{mybib}
 
 
@@ -172,6 +164,17 @@
 % If you don't have any, you may delete everything below,
 % until and including \input{appendices}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titlespacing*{\chapter}{0pt}{*-4.5}{*4}
 \appendix
 \input{appendices}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% The list of own publications.  If you don't have one, you may
+% comment out the next 4 lines.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\nociteown{lim:2007,lim:latextypesetting}
+\begin{singlespace}
+\bibliographyown{mybib}
+\end{singlespace}
+
 \end{document}
