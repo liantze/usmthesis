@@ -1,5 +1,9 @@
 BRIEF CHANGELOG
 ===============
+v1.64 Mar 20 2016
+    - First paragraphs after each sectional heading is
+      now indented
+
 v1.63 Mar 3 2016
     - Moved List of Publications to after Appendices
     - References heading has 5cm top margin

@@ -1,4 +1,4 @@
-%% usmthesis.cls 2016/02/17 version V1.62
+%% usmthesis.cls 2016/03/20 version V1.64
 %% 
 %% NOTE: This text file uses UNIX line feed conventions. When (human)
 %% reading this file on other platforms, you may have to use a text
@@ -29,16 +29,24 @@
 %
 %  BRIEF CHANGELOG
 %  ===============
+% v1.64 Mar 20 2016
+%     - First paragraphs after each sectional heading is
+%       now indented
+%
+% v1.63 Mar 3 2016
+%     - Moved List of Publications to after Appendices
+%     - References heading has 5cm top margin
+%
 %  v1.62 Feb 17 2016
 %     - Turn off page numbering for appendices in the ToC
 %     - Appendix chapters are un-bold in the ToC now
 %
-%  v1.61 Sep 22 2015
+% v1.61 Sep 22 2015
 %     - Abstract titles are now 12pt (irrespective of the font being used)
 %     - Default bibliography style is now APA 
 %       (with \RequirePackage[natbibapa]{apacite})
 %
-%  v1.6 Aug 21 2015
+% v1.6 Aug 21 2015
 %     - (Based on feedback from Puan Nurul Hasyda of IPS)
 %     - Chapters are now in bold in the TOC.
 %     - Eliminated vertical spaces at the top and bottom of cover and 
@@ -49,17 +57,17 @@
 %     - Instead, the "times" option loads mathptmx 12pt as body font,
 %       and "arial" option loads "helvet" 11pt as body font.
 %
-%  v1.5 Apr 16 2015
+% v1.5 Apr 16 2015
 %     - Thesis titles in abstracts are now double-spaced if >1 lines, and
 %       are smaller than the "Abstract"/"Abstrak" keywords.
 %
-%  v1.4 Apr 14 2015
+% v1.4 Apr 14 2015
 %     - Now works with updated acronym package.
 %     - Finally using bahasam babel option (and removed the french language,
 %       couldn't remember why I didn't remove it after some personal tests).
 %     - Page numbers in content lists are now unbold (requested by IPS).
 %
-%  v1.3 May 12 2012
+% v1.3 May 12 2012
 %     - Refined spacing in bibliography list and after chapter heading
 %     - Fixed font size in cover (from 17pt to 18pt)
 %     - User can now specify preferred document body font size (11pt or 12pt)
@@ -128,6 +136,9 @@
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{usmthesis}[2015/08/21 version 1.6]
+
+\RequirePackage{silence}
+\WarningFilter{float}{Can't redefine}
 
 % switches for URL font
 \newif\if@urltt
@@ -249,6 +260,8 @@
 \renewcommand\thesubsubsection{\thesubsection(\alph{subsubsection})}
 \titleformat{\subsubsection}[hang]{\bfseries}{\thesubsubsection}{6pt}{}
 \titlespacing*{\subsubsection}{0pt}{*3}{*-3}
+%% 20 Mar 2016: first paragraphs need to be indented
+\RequirePackage{indentfirst}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Formatting of the TOC, LOF and LOT
@@ -398,9 +411,10 @@
 \RequirePackage{tabularx,colortbl,dcolumn}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Loads apacite and natbib by defualt
+% 22 Sep 2015: Loads apacite by default
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\RequirePackage[numbers]{natbib}
+% \RequirePackage[numbers]{natbib}
+% \RequirePackage{natbib}
 \RequirePackage[natbibapa]{apacite}
 \addto\captionsenglish{%
 \renewcommand{\bibname}{REFERENCES}
@@ -517,7 +531,7 @@ for the degree of\\
 \newenvironment{EnAbstract}
   { \titleformat{\chapter}[display]{\filcenter\bfseries}{\fontsize{12pt}{14pt}\selectfont\MakeUppercase{\chaptername{} \thechapter}}{-1.7pc}{\linespread{2}\bfseries\fontsize{12pt}{14pt}\selectfont\MakeUppercase}
     \chapter[Abstract]{\@title}%
-    \begin{center}{\fontsize{12pt}{14pt}\bfseries\selectfont ABSTRACT}\end{center}\ignorespaces}
+    \begin{center}{\fontsize{12pt}{14pt}\bfseries\selectfont ABSTRACT}\end{center}\par\indent}
   {\ignorespacesafterend}
 
 %% Malay abstract environment
@@ -525,7 +539,7 @@ for the degree of\\
   {\begin{otherlanguage}{bahasam}%
     \titleformat{\chapter}[display]{\filcenter\bfseries}{\fontsize{12pt}{14pt}\selectfont\MakeUppercase{\chaptername{} \thechapter}}{-1.7pc}{\linespread{2}\bfseries\fontsize{12pt}{14pt}\selectfont\MakeUppercase}
     \chapter[Abstrak]{\@titlems}%
-    \begin{center}{\fontsize{12pt}{14pt}\bfseries\selectfont ABSTRAK}\end{center}\ignorespaces}
+    \begin{center}{\fontsize{12pt}{14pt}\bfseries\selectfont ABSTRAK}\end{center}\par\indent}
   {\end{otherlanguage}\ignorespacesafterend}
 
 \apptocmd{\frontmatter}{%
