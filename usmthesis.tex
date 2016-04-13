@@ -6,7 +6,7 @@
 %% probably can't tell the difference (I can't either)
 \documentclass{usmthesis}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% This is usmthesis.tex, 6 March 2016.
+% This is usmthesis.tex, 13 April 2016.
 % Created by Lim Lian Tze (Ph.D.)
 % liantze@gmail.com
 % http://liantze.penguinattack.org.
@@ -167,7 +167,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \titlespacing*{\chapter}{0pt}{*-4.5}{*4}
 \appendix
+\assignpagestyle{\chapter}{empty}
 \input{appendices}
+\assignpagestyle{\chapter}{plain}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % The list of own publications.  If you don't have one, you may

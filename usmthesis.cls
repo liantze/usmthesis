@@ -1,4 +1,4 @@
-%% usmthesis.cls 2016/03/22 version V1.65
+%% usmthesis.cls 2016/04/13 version V1.66
 %% 
 %% NOTE: This text file uses UNIX line feed conventions. When (human)
 %% reading this file on other platforms, you may have to use a text
@@ -29,18 +29,21 @@
 %
 %  BRIEF CHANGELOG
 %  ===============
+% v1.65 Apr 13 2016
+%     - First pages of appendix chapters don't have footers now.
+%
 % v1.65 Mar 22 2016
 %     - Titles on cover/title pages now double-spaced
 %
 % v1.64 Mar 20 2016
 %     - First paragraphs after each sectional heading is
 %       now indented
-      
+%
 % v1.63 Mar 3 2016
 %     - Moved List of Publications to after Appendices
 %     - References heading has 5cm top margin
-
-%  v1.62 Feb 17 2016
+%
+% v1.62 Feb 17 2016
 %     - Turn off page numbering for appendices in the ToC
 %     - Appendix chapters are un-bold in the ToC now
 %
@@ -338,12 +341,7 @@
 % Header and Footer formatting: empty header, and
 % page number at the bottom center.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage{fancyhdr}
-\pagestyle{fancy}
-\fancyhead{}
-\renewcommand\headrulewidth{0pt}
-\fancyfoot{}
-\fancyfoot[C]{\thepage}
+\pagestyle{plain}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
