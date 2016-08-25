@@ -1,4 +1,4 @@
-%% usmthesis.cls 2016/04/13 version V1.66
+%% usmthesis.cls 2016/08/25 version V1.7
 %% 
 %% NOTE: This text file uses UNIX line feed conventions. When (human)
 %% reading this file on other platforms, you may have to use a text
@@ -29,7 +29,11 @@
 %
 %  BRIEF CHANGELOG
 %  ===============
-% v1.65 Apr 13 2016
+% v1.7  Aug 26 2016
+%     - All front matter entries in ToC needs to be bold and uppercase now
+%     - Chapter number formatted as "CHAPTER ONE" in both main text and ToC
+%
+% v1.66 Apr 13 2016
 %     - First pages of appendix chapters don't have footers now.
 %
 % v1.65 Mar 22 2016
@@ -249,10 +253,13 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Formatting of the various sectioning headings
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{fmtcount}
+\newcommand{\formattedchapnum}[1]{\NUMBERstring{#1}}
+
 \RequirePackage{titlesec}
 % chapters
 %% Aug 2015: Chapter heading sizes must be FIXED at 14pt, according to IPS.
-\titleformat{\chapter}[display]{\filcenter\bfseries}{\fontsize{14pt}{16pt}\selectfont\MakeUppercase{\chaptername{} \thechapter}}{-1.7pc}{\begin{singlespace}\bfseries\fontsize{14pt}{16pt}\selectfont\MakeUppercase}[\end{singlespace}]
+\titleformat{\chapter}[display]{\filcenter\bfseries}{\fontsize{14pt}{16pt}\selectfont\MakeUppercase{\chaptername{} \formattedchapnum{chapter}}}{-1.7pc}{\begin{singlespace}\bfseries\fontsize{14pt}{16pt}\selectfont\MakeUppercase}[\end{singlespace}]
 
 %\titlespacing*{\chapter}{0pt}{*-4.5}{*6}
 \titlespacing*{\chapter}{0pt}{*-4.5}{*4}
@@ -307,7 +314,7 @@
 \renewcommand\cftpartdotsep{1}
 \renewcommand\cftpartleader{\normalfont\cftdotfill{\cftpartdotsep}}
 
-\renewcommand\cftchapfont{}
+\renewcommand\cftchapfont{\bfseries}
 \renewcommand\cftchappagefont{\normalfont\normalsize}
 \renewcommand\cftchapdotsep{1}
 \renewcommand\cftchapleader{\normalfont\cftdotfill{\cftchapdotsep}}
@@ -444,6 +451,14 @@
 \def\submityear#1{\gdef\@submityear{#1}}
 \def\@submityear{\@latex@warning@no@line{No \noexpand\submityear given}}
 
+%% Make chapter number in ToC not use a fixed width box
+\patchcmd{\l@chapter}% <cmd>
+  {\leavevmode}% <search>
+  {\leavevmode%
+   \renewcommand{\numberline}[1]{\hbox{\@cftbsnum ##1\@cftasnum}\@cftasnumb}}% <replace>
+  {}{}% <success><failure>
+
+
 %% overrides \chapter, to allow for all-caps in text but as-is in TOC
 %\newcommand\mychapter[1]{\chapter[\texorpdfstring{\uppercase{#1}}{#1}]{#1}}
 
@@ -455,9 +470,9 @@
                          \refstepcounter{chapter}%
                          \typeout{\@chapapp\space\thechapter.}%
                          \addcontentsline{toc}{chapter}%
-                                   {\protect\numberline{\thechapter}\texorpdfstring{\uppercase{#1}}{#1}}%
+                                   {\protect\numberline{\expandafter\formattedchapnum{chapter}}\texorpdfstring{\uppercase{#1}}{#1}}%
                        \else
-                         \addcontentsline{toc}{chapter}{#1}%
+                         \addcontentsline{toc}{chapter}{\texorpdfstring{\uppercase{#1}}{#1}}%
                        \fi
                     \else
                       \addcontentsline{toc}{chapter}{\texorpdfstring{\uppercase{#1}}{#1}}%
@@ -552,7 +567,11 @@ for the degree of\\
   \addtocontents{lot}{\protect\hfill{\protect\bfseries Page}\\}
   \addtocontents{lop}{\protect\raggedright\protect\sloppy}
   \addtocontents{lop}{\protect\hfill{\protect\bfseries Page}\\}
-  \renewcommand\contentsname{Table of Contents}
+  \renewcommand\contentsname{\texorpdfstring{TABLE OF CONTENTS}{Table of Contents}}
+  \renewcommand\listtablename{\texorpdfstring{LIST OF TABLES}{List of Tables}}
+  \renewcommand\listfigurename{\texorpdfstring{LIST OF FIGURES}{List of Figures}}
+  \renewcommand{\listplatename}{\texorpdfstring{LIST OF PLATES}{List of Plates}}
+  \renewcommand\bibname{\texorpdfstring{REFERENCES}{References}}
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   % Inserts a "Front Matter" bookmark if using pdfLaTeX
@@ -566,7 +585,7 @@ for the degree of\\
 \pretocmd{\mainmatter}{%
   \addtocontents{toc}{\protect\setlength{\protect\cftbeforechapskip}{2.5pc}}
   \addtocontents{toc}{\protect\cftpagenumbersoff{chap}}
-  \addtocontents{toc}{\protect\renewcommand\protect\cftchapfont{\protect\bfseries}}
+%  \addtocontents{toc}{\protect\renewcommand\protect\cftchapfont{\protect\bfseries}}
 }{}{}
 
 \apptocmd{\mainmatter}{%
@@ -585,6 +604,7 @@ for the degree of\\
 
 \pretocmd{\appendix}{%
   \clearpage
+  \patchcmd{\formattedchapnum}{\NUMBERstring}{\Alph}{}{}
   \addtocontents{toc}{\protect\cftpagenumbersoff{part}}
   \addtocontents{toc}{\protect\cftpagenumbersoff{chapter}}
   \addtocontents{toc}{\protect\setlength{\protect\cftbeforechapskip}{1pc}}
@@ -595,8 +615,8 @@ for the degree of\\
 }{}{}
 
 \AtBeginDocument{
-\settowidth{\tmplength}{\bfseries\MakeUppercase{\chaptername}\space9\cftchapaftersnum}
-\setlength\cftchapnumwidth{\tmplength}
+%\settowidth{\tmplength}{\bfseries\MakeUppercase{\chaptername}\space9\cftchapaftersnum}
+%\setlength\cftchapnumwidth{\tmplength}
 \apptocmd{\appendix}{%
   \phantomsection\addcontentsline{toc}{part}{\texorpdfstring{\bfseries\uppercase{Appendices}}{Appendices}}
   \thispagestyle{empty}
