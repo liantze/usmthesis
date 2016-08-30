@@ -31,7 +31,11 @@
 %  ===============
 % v1.7  Aug 26 2016
 %     - All front matter entries in ToC needs to be bold and uppercase now
-%     - Chapter number formatted as "CHAPTER ONE" in both main text and ToC
+%     - Chapter number formatted as "CHAPTER ONE" in both main text and ToC;
+%       and is "CHAPTER ONE: " in the ToC
+%     - Front matter is now all singlespaced
+%     - List of Publications doesn't need page number either! now bolded
+%     - and uppercased in ToC
 %
 % v1.66 Apr 13 2016
 %     - First pages of appendix chapters don't have footers now.
@@ -319,7 +323,7 @@
 \renewcommand\cftchapdotsep{1}
 \renewcommand\cftchapleader{\normalfont\cftdotfill{\cftchapdotsep}}
 \renewcommand\cftchappresnum{\MakeUppercase{\chaptername} }
-\renewcommand\cftchapaftersnum{\; --\; }
+\renewcommand\cftchapaftersnum{:\space}
 \newlength\tmplength
 
 \renewcommand\cftfigpresnum{Figure }
@@ -593,7 +597,7 @@ for the degree of\\
 }{}{}
 
 \pretocmd{\bibliography}{%
-  \addtocontents{toc}{\protect\cftpagenumberson{chap}}
+%  \addtocontents{toc}{\protect\cftpagenumberson{chap}}
   \begin{singlespace}
 }{}{}
 
