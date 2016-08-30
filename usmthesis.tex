@@ -60,7 +60,7 @@
 %  You can comment out the following line if you don't have a
 % "List of Own Publications"
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcites{own}{List of Publications}
+\newcites{own}{LIST OF PUBLICATIONS}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Options for generating hyperlinks when using pdfLaTeX
@@ -75,6 +75,7 @@
 \fi
 
 \usepackage{ragged2e}
+
 \begin{document}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -104,7 +105,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \include{acknowledgements}
 
-\begin{singlespace}
+% \begin{singlespace} %% No more single-spaciness for these
 \tableofcontents \clearpage
 \listoftables \clearpage
 \listoffigures \clearpage
@@ -119,7 +120,7 @@
 % have a "List of Acronyms"
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \include{loa}
-\end{singlespace}
+% \end{singlespace}
 
 % Paragraph spacing
 \setlength\parskip{18pt}
@@ -157,6 +158,7 @@
 % http://jabref.sourceforge.net/
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \titlespacing*{\chapter}{0pt}{25mm}{\baselineskip}
+\addtocontents{toc}{\protect\cftpagenumberson{chap}}
 \bibliography{mybib}
 
 
@@ -169,7 +171,7 @@
 \appendix
 \assignpagestyle{\chapter}{empty}
 \input{appendices}
-\assignpagestyle{\chapter}{plain}
+% \assignpagestyle{\chapter}{plain}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % The list of own publications.  If you don't have one, you may
@@ -177,6 +179,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \nociteown{lim:2007,lim:latextypesetting}
 \begin{singlespace}
+\addtocontents{toc}{\protect\renewcommand\protect\cftchapfont{\protect\bfseries}}
 \bibliographyown{mybib}
 \end{singlespace}
 
