@@ -184,7 +184,7 @@
 \ExecuteOptions{times,urltt,noboxfig}
 \ProcessOptions
 
-\RequirePackage{etoolbox}
+\RequirePackage{xpatch}
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[T1]{fontenc}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -263,10 +263,10 @@
 \RequirePackage{titlesec}
 % chapters
 %% Aug 2015: Chapter heading sizes must be FIXED at 14pt, according to IPS.
-\titleformat{\chapter}[display]{\filcenter\bfseries}{\fontsize{14pt}{16pt}\selectfont\MakeUppercase{\chaptername{} \formattedchapnum{chapter}}}{-1.7pc}{\begin{singlespace}\bfseries\fontsize{14pt}{16pt}\selectfont\MakeUppercase}[\end{singlespace}]
+\titleformat{\chapter}[display]{\filcenter\bfseries}{\fontsize{14pt}{16pt}\selectfont\MakeUppercase{\chaptername{} \formattedchapnum{chapter}}}{-1.7pc}{\begingroup\singlespacing\bfseries\fontsize{14pt}{16pt}\selectfont\MakeUppercase}[\endgroup]
 
 %\titlespacing*{\chapter}{0pt}{*-4.5}{*6}
-\titlespacing*{\chapter}{0pt}{*-4.5}{*4}
+\titlespacing*{\chapter}{0pt}{-50pt}{*4}
 % section e.g. 4.1
 \titleformat{\section}[hang]{\bfseries\normalsize}{\thesection}{6pt}{}
 \titlespacing*{\section}{0pt}{*3}{*-3}
@@ -299,15 +299,15 @@
 \cftsetrmarg{2.6pc plus1fil}
 \cftsetpnumwidth{2pc}
 
-\setlength\cftbeforepartskip{3pc}
-\setlength\cftbeforechapskip{1pc}
-\setlength\cftbeforesecskip{1pc}
-\setlength\cftbeforesubsecskip{1pc}
-\setlength\cftbeforesubsubsecskip{1pc}
-\setlength\cftbeforefigskip{1pc}
-\setlength\cftbeforesubfigskip{1pc}
-\setlength\cftbeforetabskip{1pc}
-\setlength\cftbeforeplateskip{1pc}
+\setlength\cftbeforepartskip{0.5\baselineskip}
+\setlength\cftbeforechapskip{0pt}
+\setlength\cftbeforesecskip{0pt}
+\setlength\cftbeforesubsecskip{0pt}
+\setlength\cftbeforesubsubsecskip{0pt}
+\setlength\cftbeforefigskip{0pt}
+\setlength\cftbeforesubfigskip{0pt}
+\setlength\cftbeforetabskip{0pt}
+\setlength\cftbeforeplateskip{0pt}
 
 \cftsetindents{sec}{0pt}{2.5pc}
 \cftsetindents{subsec}{2.5pc}{3.05pc}
@@ -431,9 +431,9 @@
 \addto\captionsenglish{%
 \renewcommand{\bibname}{REFERENCES}
 }
-\setlength\bibsep{1em}
+\setlength\bibsep{\baselineskip}
 \setlength\bibhang{1.5em}
-\renewcommand\bibfont{\singlespace}
+%\renewcommand\bibfont{\singlespacing}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Multiple bibliographics, used to hack up a list of 
@@ -469,6 +469,7 @@
 % May 20: re-defined \@chapter so \mychapter is not needed anymore. This
 % allows IDEs such as TeXnicCenter to properly recognise the chapters and
 % display them correctly in the Structure/Navigator.
+\let\old@chapter\@chapter
 \def\@chapter[#1]#2{\ifnum \c@secnumdepth >\m@ne
                        \if@mainmatter
                          \refstepcounter{chapter}%
@@ -482,17 +483,15 @@
                       \addcontentsline{toc}{chapter}{\texorpdfstring{\uppercase{#1}}{#1}}%
                     \fi
                     \chaptermark{\texorpdfstring{\uppercase{#1}}{#1}}%
-                    \addtocontents{lof}{\protect\addvspace{10\p@}}%
-                    \addtocontents{lot}{\protect\addvspace{10\p@}}%
-                    \addtocontents{lop}{\protect\addvspace{10\p@}}%
+%                    \addtocontents{lof}{\protect\addvspace{10\p@}}%
+%                    \addtocontents{lot}{\protect\addvspace{10\p@}}%
+%                    \addtocontents{lop}{\protect\addvspace{10\p@}}%
                     \if@twocolumn
                       \@topnewpage[\@makechapterhead{\texorpdfstring{\uppercase{#2}}{#1}}]%
                     \else
                       \@makechapterhead{\texorpdfstring{\uppercase{#2}}{#1}}%
                       \@afterheading
                     \fi}
-
-
 
 %% Creates the first two cover pages
 \newcommand\makecover{%
@@ -524,7 +523,7 @@ UNIVERSITI SAINS MALAYSIA\par
 
 \vspace*{\stretch{2}}
 
-{\Large by}\par
+{\fontsize{14pt}{16pt}\selectfont by\par}
 
 \vspace*{\stretch{2}}
 
@@ -549,14 +548,16 @@ for the degree of\\
 
 %% English environment
 \newenvironment{EnAbstract}
-  { \titleformat{\chapter}[display]{\filcenter\bfseries}{\fontsize{12pt}{14pt}\selectfont\MakeUppercase{\chaptername{} \thechapter}}{-1.7pc}{\linespread{2}\bfseries\fontsize{12pt}{14pt}\selectfont\MakeUppercase}
+  {\titlespacing*{\chapter}{0pt}{-50pt}{\baselineskip}
+   \titleformat{\chapter}[display]{\filcenter\bfseries}{\fontsize{12pt}{14pt}\selectfont\MakeUppercase{\chaptername{} \thechapter}}{-1.7pc}{\linespread{2}\bfseries\fontsize{12pt}{14pt}\selectfont\MakeUppercase}
     \chapter[Abstract]{\@title}%
     \begin{center}{\fontsize{12pt}{14pt}\bfseries\selectfont ABSTRACT}\end{center}\par\indent}
   {\ignorespacesafterend}
 
 %% Malay abstract environment
 \newenvironment{MsAbstract}
-  {\begin{otherlanguage}{bahasam}%
+  { \titlespacing*{\chapter}{0pt}{-50pt}{\baselineskip}
+    \begin{otherlanguage}{bahasam}%
     \titleformat{\chapter}[display]{\filcenter\bfseries}{\fontsize{12pt}{14pt}\selectfont\MakeUppercase{\chaptername{} \thechapter}}{-1.7pc}{\linespread{2}\bfseries\fontsize{12pt}{14pt}\selectfont\MakeUppercase}
     \chapter[Abstrak]{\@titlems}%
     \begin{center}{\fontsize{12pt}{14pt}\bfseries\selectfont ABSTRAK}\end{center}\par\indent}
@@ -584,38 +585,42 @@ for the degree of\\
       \pdfbookmark[-1]{Front Matter}{front}
   \else\fi
   \renewcommand{\thechapter}{\arabic{chapter}}
+  \titlespacing*{\chapter}{0pt}{-32pt}{\baselineskip}
 }{}{}
 
 \pretocmd{\mainmatter}{%
-  \addtocontents{toc}{\protect\setlength{\protect\cftbeforechapskip}{2.5pc}}
+  \addtocontents{toc}{\protect\setlength{\protect\cftbeforechapskip}{0.5\baselineskip}}
   \addtocontents{toc}{\protect\cftpagenumbersoff{chap}}
 %  \addtocontents{toc}{\protect\renewcommand\protect\cftchapfont{\protect\bfseries}}
 }{}{}
 
 \apptocmd{\mainmatter}{%
   \ifpdf\pdfbookmark[-1]{Main Chapters}{main}\else\fi
+  \titlespacing*{\chapter}{0pt}{-50pt}{\baselineskip}
 }{}{}
 
-\pretocmd{\bibliography}{%
-%  \addtocontents{toc}{\protect\cftpagenumberson{chap}}
-  \begin{singlespace}
-}{}{}
-
-\apptocmd{\bibliography}{%
-  \end{singlespace}
-  \clearpage
-}{}{}
+% \pretocmd{\bibliography}{%
+% %  \addtocontents{toc}{\protect\cftpagenumberson{chap}}
+%   \begingroup\singlespacing
+% }{}{}
+% 
+% \apptocmd{\bibliography}{%
+%   \endgroup
+%   \clearpage
+% }{}{}
 
 \pretocmd{\appendix}{%
   \clearpage
   \patchcmd{\formattedchapnum}{\NUMBERstring}{\Alph}{}{}
   \addtocontents{toc}{\protect\cftpagenumbersoff{part}}
   \addtocontents{toc}{\protect\cftpagenumbersoff{chapter}}
-  \addtocontents{toc}{\protect\setlength{\protect\cftbeforechapskip}{1pc}}
+  \addtocontents{toc}{\protect\setlength{\protect\cftbeforechapskip}{0pt}}
 }{}{}
 
 \apptocmd{\appendix}{
   \addtocontents{toc}{\protect\renewcommand\protect\cftchapfont{\protect\mdseries}}
+  \let\@chapter\old@chapter
+  \addtocontents{toc}{\protect\renewcommand\protect\cftchappresnum{\protect\chaptername\protect\space}}
 }{}{}
 
 \AtBeginDocument{
@@ -630,8 +635,14 @@ for the degree of\\
     \end{center}
   \vspace*{\stretch{2}}
   \addtocontents{toc}{\protect\renewcommand{\protect\chaptername}{\appendixname}}
-  \settowidth{\tmplength}{\bfseries\MakeUppercase{\appendixname}\space N\cftchapaftersnum}
+  \settowidth{\tmplength}{\bfseries\appendixname\space N\cftchapaftersnum}
   \addtocontents{toc}{\protect\setlength{\cftchapnumwidth}{\the\tmplength}}
   \renewcommand\chaptername{\appendixname}
 }{}{}
+}
+
+\RequirePackage{varwidth}
+\DeclareRobustCommand{\vw}[1]{%
+  \begin{varwidth}[t]{0.6\linewidth}\strut#1\unskip\nobreak\strut\\[-6pt]\par
+  \end{varwidth}%
 }
