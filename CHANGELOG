@@ -1,5 +1,14 @@
 BRIEF CHANGELOG
 ===============
+v1.67 Oct 05 2016
+    - Refactored code in .cls.
+    - Chapter heading spacing should be more consistent now.
+    - Multiline figure and table captions should now have page numbers aligned
+      with first line. (Not fixed for chapter/section headings; IMHO these
+      should be kept short.)
+    - Added some examples to usmthesis.tex to handle cases when IPS requests
+      for no page numbers/no ToC entries for appendices etc.
+
 v1.66 Apr 13 2016
     - First pages of appendix chapters don't have footers now.
 

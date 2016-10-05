@@ -1,4 +1,4 @@
-%% usmthesis.cls 2016/04/13 version V1.66
+%% usmthesis.cls 2016/10/05 version V1.67
 %% 
 %% NOTE: This text file uses UNIX line feed conventions. When (human)
 %% reading this file on other platforms, you may have to use a text
@@ -29,7 +29,16 @@
 %
 %  BRIEF CHANGELOG
 %  ===============
-% v1.65 Apr 13 2016
+% v1.67 Oct 05 2016
+%     - Refactored code in .cls.
+%     - Chapter heading spacing should be more consistent now.
+%     - Multiline figure and table captions should now have page numbers aligned
+%       with first line. (Not fixed for chapter/section headings; IMHO these
+%       should be kept short.)
+%     - Added some examples to usmthesis.tex to handle cases when IPS requests
+%       for no page numbers/no ToC entries for appendices etc.
+%
+% v1.66 Apr 13 2016
 %     - First pages of appendix chapters don't have footers now.
 %
 % v1.65 Mar 22 2016
@@ -176,7 +185,7 @@
 \ExecuteOptions{times,urltt,noboxfig}
 \ProcessOptions
 
-\RequirePackage{etoolbox}
+\RequirePackage{xpatch}
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[T1]{fontenc}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -196,6 +205,7 @@
   \LoadClass[a4paper,oneside,11pt]{book}
   \renewcommand\familydefault{\sfdefault}
 \fi
+\normalsize
 
 \RequirePackage{ifpdf}
 
@@ -252,10 +262,10 @@
 \RequirePackage{titlesec}
 % chapters
 %% Aug 2015: Chapter heading sizes must be FIXED at 14pt, according to IPS.
-\titleformat{\chapter}[display]{\filcenter\bfseries}{\fontsize{14pt}{16pt}\selectfont\MakeUppercase{\chaptername{} \thechapter}}{-1.7pc}{\begin{singlespace}\bfseries\fontsize{14pt}{16pt}\selectfont\MakeUppercase}[\end{singlespace}]
+\titleformat{\chapter}[display]{\filcenter\bfseries}{\fontsize{14pt}{16pt}\selectfont\MakeUppercase{\chaptername{} \thechapter}}{-1em}{\begingroup\singlespacing\bfseries\fontsize{14pt}{16pt}\selectfont\MakeUppercase}[\endgroup]
 
 %\titlespacing*{\chapter}{0pt}{*-4.5}{*6}
-\titlespacing*{\chapter}{0pt}{*-4.5}{*4}
+\titlespacing*{\chapter}{0pt}{-50pt}{\baselineskip}
 % section e.g. 4.1
 \titleformat{\section}[hang]{\bfseries\normalsize}{\thesection}{6pt}{}
 \titlespacing*{\section}{0pt}{*3}{*-3}
@@ -288,15 +298,15 @@
 \cftsetrmarg{2.6pc plus1fil}
 \cftsetpnumwidth{2pc}
 
-\setlength\cftbeforepartskip{3pc}
-\setlength\cftbeforechapskip{1pc}
-\setlength\cftbeforesecskip{1pc}
-\setlength\cftbeforesubsecskip{1pc}
-\setlength\cftbeforesubsubsecskip{1pc}
-\setlength\cftbeforefigskip{1pc}
-\setlength\cftbeforesubfigskip{1pc}
-\setlength\cftbeforetabskip{1pc}
-\setlength\cftbeforeplateskip{1pc}
+\setlength\cftbeforepartskip{0pt}
+\setlength\cftbeforechapskip{0pt}
+\setlength\cftbeforesecskip{0pt}
+\setlength\cftbeforesubsecskip{0pt}
+\setlength\cftbeforesubsubsecskip{0pt}
+\setlength\cftbeforefigskip{0pt}
+\setlength\cftbeforesubfigskip{0pt}
+\setlength\cftbeforetabskip{0pt}
+\setlength\cftbeforeplateskip{0pt}
 
 \cftsetindents{sec}{0pt}{2.5pc}
 \cftsetindents{subsec}{2.5pc}{3.05pc}
@@ -312,7 +322,7 @@
 \renewcommand\cftchapdotsep{1}
 \renewcommand\cftchapleader{\normalfont\cftdotfill{\cftchapdotsep}}
 \renewcommand\cftchappresnum{\MakeUppercase{\chaptername} }
-\renewcommand\cftchapaftersnum{\; --\; }
+\renewcommand\cftchapaftersnum{\space\;--\;}
 \newlength\tmplength
 
 \renewcommand\cftfigpresnum{Figure }
@@ -336,6 +346,19 @@
 \renewcommand\cftplatedotsep{\cftnodots}
 %\renewcommand\cftplatepagefont{\bfseries}
 
+%% Oct '16: So in case of multiline entries in the content lists, it looks like IPS
+%% might be wanting the page number to align with the _first_ line.
+%%
+\RequirePackage{varwidth}
+\DeclareRobustCommand{\vw}[2]{%
+  \begin{varwidth}[t]{#1\linewidth}\strut#2\unskip\nobreak\strut
+  \end{varwidth}%
+}
+
+\renewcommand{\cftfigaftersnumb}{\vw{0.7}}
+\renewcommand{\cfttabaftersnumb}{\vw{0.7}}
+\renewcommand{\cftplateaftersnumb}{\vw{0.7}}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Header and Footer formatting: empty header, and
@@ -358,9 +381,9 @@
 \def\theHplate{\arabic{plate}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% For more compact-looking lists
+% For customising lists
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\RequirePackage{paralist}
+\RequirePackage{enumitem}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -406,6 +429,11 @@
      \fi}
 }%
 
+\patchcmd{\AC@deflist}{\setlength{\leftmargin}{\labelwidth}}
+{\setlength{\leftmargin}{\labelwidth}\setlength\itemsep{0pt}}
+{}{}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Table-related packages
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -418,11 +446,11 @@
 % \RequirePackage{natbib}
 \RequirePackage[natbibapa]{apacite}
 \addto\captionsenglish{%
-\renewcommand{\bibname}{REFERENCES}
+  \renewcommand{\bibname}{References}
 }
 \setlength\bibsep{1em}
 \setlength\bibhang{1.5em}
-\renewcommand\bibfont{\singlespace}
+\renewcommand\bibfont{\singlespacing}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Multiple bibliographics, used to hack up a list of 
@@ -444,35 +472,29 @@
 \def\submityear#1{\gdef\@submityear{#1}}
 \def\@submityear{\@latex@warning@no@line{No \noexpand\submityear given}}
 
-%% overrides \chapter, to allow for all-caps in text but as-is in TOC
-%\newcommand\mychapter[1]{\chapter[\texorpdfstring{\uppercase{#1}}{#1}]{#1}}
+%% Oct 2016: Use \xpatchcmd to do a cleaner job at capitalising the chapter titles
+\let\old@chapter\@chapter
+\xpatchcmd{\@chapter}{\numberline{\thechapter}#1}
+  {\numberline{\thechapter}\texorpdfstring{\uppercase{#1}}{#1}}
+  {}{\PackageWarning{usmthesis}{Couldn't patch chapter.}}
 
-% May 20: re-defined \@chapter so \mychapter is not needed anymore. This
-% allows IDEs such as TeXnicCenter to properly recognise the chapters and
-% display them correctly in the Structure/Navigator.
-\def\@chapter[#1]#2{\ifnum \c@secnumdepth >\m@ne
-                       \if@mainmatter
-                         \refstepcounter{chapter}%
-                         \typeout{\@chapapp\space\thechapter.}%
-                         \addcontentsline{toc}{chapter}%
-                                   {\protect\numberline{\thechapter}\texorpdfstring{\uppercase{#1}}{#1}}%
-                       \else
-                         \addcontentsline{toc}{chapter}{#1}%
-                       \fi
-                    \else
-                      \addcontentsline{toc}{chapter}{\texorpdfstring{\uppercase{#1}}{#1}}%
-                    \fi
-                    \chaptermark{\texorpdfstring{\uppercase{#1}}{#1}}%
-                    \addtocontents{lof}{\protect\addvspace{10\p@}}%
-                    \addtocontents{lot}{\protect\addvspace{10\p@}}%
-                    \addtocontents{lop}{\protect\addvspace{10\p@}}%
-                    \if@twocolumn
-                      \@topnewpage[\@makechapterhead{\texorpdfstring{\uppercase{#2}}{#1}}]%
-                    \else
-                      \@makechapterhead{\texorpdfstring{\uppercase{#2}}{#1}}%
-                      \@afterheading
-                    \fi}
+\xpatchcmd{\@chapter}{\addcontentsline{toc}{chapter}{#1}\fi\chaptermark{#1}}
+  {\addcontentsline{toc}{chapter}{\texorpdfstring{\uppercase{#1}}{#1}}\fi\chaptermark{#1}}
+  {}{\PackageWarning{usmthesis}{Couldn't patch chapter.}}
 
+\xpatchcmd{\@chapter}{\@makechapterhead{#2}}
+  {\@makechapterhead{\texorpdfstring{\uppercase{#2}}{#1}}}
+  {}{\PackageWarning{usmthesis}{Couldn't patch chapter.}}
+
+\xpatchcmd{\@chapter}{\@makechapterhead{#2}}
+  {\@makechapterhead{\texorpdfstring{\uppercase{#2}}{#1}}}
+  {}{\PackageWarning{usmthesis}{Couldn't patch chapter.}}
+
+\xpatchcmd{\@chapter}{\addtocontents{lof}{\protect\addvspace{10\p@}}}
+  {}{}{\PackageWarning{usmthesis}{Couldn't patch chapter.}}
+
+\xpatchcmd{\@chapter}{\addtocontents{lot}{\protect\addvspace{10\p@}}}
+  {}{}{\PackageWarning{usmthesis}{Couldn't patch chapter.}}
 
 
 %% Creates the first two cover pages
@@ -505,7 +527,7 @@ UNIVERSITI SAINS MALAYSIA\par
 
 \vspace*{\stretch{2}}
 
-{\Large by}\par
+{\fontsize{14pt}{16pt}\selectfont by\par}
 
 \vspace*{\stretch{2}}
 
@@ -529,19 +551,25 @@ for the degree of\\
 
 
 %% English environment
-\newenvironment{EnAbstract}
-  { \titleformat{\chapter}[display]{\filcenter\bfseries}{\fontsize{12pt}{14pt}\selectfont\MakeUppercase{\chaptername{} \thechapter}}{-1.7pc}{\linespread{2}\bfseries\fontsize{12pt}{14pt}\selectfont\MakeUppercase}
-    \chapter[Abstract]{\@title}%
-    \begin{center}{\fontsize{12pt}{14pt}\bfseries\selectfont ABSTRACT}\end{center}\par\indent}
-  {\ignorespacesafterend}
+\newenvironment{EnAbstract}{%
+  \titlespacing*{\chapter}{0pt}{-50pt}{\baselineskip}
+  \titleformat{\chapter}[display]{\filcenter\bfseries}{\fontsize{12pt}{14pt}\selectfont\MakeUppercase{\chaptername{} \thechapter}}{-1em}{\linespread{2}\bfseries\fontsize{12pt}{14pt}\selectfont\MakeUppercase}
+  \chapter[Abstract]{\@title}%
+  {\centering\fontsize{12pt}{14pt}\bfseries\selectfont ABSTRACT\par}
+}{%
+  \ignorespacesafterend%
+}
 
 %% Malay abstract environment
-\newenvironment{MsAbstract}
-  {\begin{otherlanguage}{bahasam}%
-    \titleformat{\chapter}[display]{\filcenter\bfseries}{\fontsize{12pt}{14pt}\selectfont\MakeUppercase{\chaptername{} \thechapter}}{-1.7pc}{\linespread{2}\bfseries\fontsize{12pt}{14pt}\selectfont\MakeUppercase}
-    \chapter[Abstrak]{\@titlems}%
-    \begin{center}{\fontsize{12pt}{14pt}\bfseries\selectfont ABSTRAK}\end{center}\par\indent}
-  {\end{otherlanguage}\ignorespacesafterend}
+\newenvironment{MsAbstract}{%
+  \titlespacing*{\chapter}{0pt}{-50pt}{\baselineskip}
+  \titleformat{\chapter}[display]{\filcenter\bfseries}{\fontsize{12pt}{14pt}\selectfont\MakeUppercase{\chaptername{} \thechapter}}{-1em}{\linespread{2}\bfseries\fontsize{12pt}{14pt}\selectfont\MakeUppercase}
+  \begin{otherlanguage}{bahasam}%
+  \chapter[Abstrak]{\@titlems}%
+  {\centering\fontsize{12pt}{14pt}\bfseries\selectfont ABSTRAK\par}
+}{%
+  \end{otherlanguage}\ignorespacesafterend
+}
 
 \apptocmd{\frontmatter}{%
   \addtocontents{toc}{\protect\raggedright\protect\sloppy}
@@ -561,53 +589,41 @@ for the degree of\\
       \pdfbookmark[-1]{Front Matter}{front}
   \else\fi
   \renewcommand{\thechapter}{\arabic{chapter}}
+  \titlespacing*{\chapter}{0pt}{-32pt}{\baselineskip}
 }{}{}
 
 \pretocmd{\mainmatter}{%
-  \addtocontents{toc}{\protect\setlength{\protect\cftbeforechapskip}{2.5pc}}
+  \addtocontents{toc}{\protect\setlength{\protect\cftbeforechapskip}{0.5\baselineskip}}
   \addtocontents{toc}{\protect\cftpagenumbersoff{chap}}
   \addtocontents{toc}{\protect\renewcommand\protect\cftchapfont{\protect\bfseries}}
-}{}{}
-
-\apptocmd{\mainmatter}{%
+  \settowidth{\tmplength}{\bfseries\MakeUppercase{\chaptername\space N}\cftchapaftersnum}
+  \addtocontents{toc}{\protect\setlength{\cftchapnumwidth}{\the\tmplength}}
+  \titlespacing*{\chapter}{0pt}{-50pt}{\baselineskip}
   \ifpdf\pdfbookmark[-1]{Main Chapters}{main}\else\fi
 }{}{}
 
-\pretocmd{\bibliography}{%
-  \addtocontents{toc}{\protect\cftpagenumberson{chap}}
-  \begin{singlespace}
-}{}{}
-
-\apptocmd{\bibliography}{%
-  \end{singlespace}
-  \clearpage
-}{}{}
 
 \pretocmd{\appendix}{%
   \clearpage
   \addtocontents{toc}{\protect\cftpagenumbersoff{part}}
   \addtocontents{toc}{\protect\cftpagenumbersoff{chapter}}
   \addtocontents{toc}{\protect\setlength{\protect\cftbeforechapskip}{1pc}}
-}{}{}
-
-\apptocmd{\appendix}{
   \addtocontents{toc}{\protect\renewcommand\protect\cftchapfont{\protect\mdseries}}
-}{}{}
-
-\AtBeginDocument{
-\settowidth{\tmplength}{\bfseries\MakeUppercase{\chaptername}\space9\cftchapaftersnum}
-\setlength\cftchapnumwidth{\tmplength}
-\apptocmd{\appendix}{%
-  \phantomsection\addcontentsline{toc}{part}{\texorpdfstring{\bfseries\uppercase{Appendices}}{Appendices}}
+  \addtocontents{toc}{\protect\setlength\protect\cftbeforechapskip{0pt}}
+  \phantomsection\addcontentsline{toc}{part}{\texorpdfstring{\bfseries Appendices}{Appendices}}
   \thispagestyle{empty}
   \vspace*{\stretch{1}}
     \begin{center}
       {\Huge\bfseries APPENDICES}
     \end{center}
   \vspace*{\stretch{2}}
-  \addtocontents{toc}{\protect\renewcommand{\protect\chaptername}{\appendixname}}
-  \settowidth{\tmplength}{\bfseries\MakeUppercase{\appendixname}\space N\cftchapaftersnum}
+  \let\@chapter\old@chapter % Oct '16: restore old chapter
+%  \addtocontents{toc}{\protect\renewcommand{\protect\chaptername}{\appendixname}}
+  %\settowidth{\tmplength}{\bfseries\MakeUppercase{\appendixname}\space N\cftchapaftersnum}
+  \addtocontents{toc}{\protect\renewcommand{\protect\cftchappresnum}{\protect\appendixname\protect\space}}
+  \settowidth{\tmplength}{\bfseries\appendixname\space N\cftchapaftersnum}
   \addtocontents{toc}{\protect\setlength{\cftchapnumwidth}{\the\tmplength}}
   \renewcommand\chaptername{\appendixname}
 }{}{}
-}
+
+\endinput
