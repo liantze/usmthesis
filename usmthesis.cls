@@ -298,15 +298,18 @@
 \cftsetrmarg{2.6pc plus1fil}
 \cftsetpnumwidth{2pc}
 
-\setlength\cftbeforepartskip{0pt}
-\setlength\cftbeforechapskip{0pt}
-\setlength\cftbeforesecskip{0pt}
-\setlength\cftbeforesubsecskip{0pt}
-\setlength\cftbeforesubsubsecskip{0pt}
-\setlength\cftbeforefigskip{0pt}
-\setlength\cftbeforesubfigskip{0pt}
-\setlength\cftbeforetabskip{0pt}
-\setlength\cftbeforeplateskip{0pt}
+\pretocmd{\@starttoc}{\begingroup\singlespacing}{}{}
+\apptocmd{\@starttoc}{\endgroup}{}{}
+
+\setlength\cftbeforepartskip{\baselineskip}
+\setlength\cftbeforechapskip{\baselineskip}
+\setlength\cftbeforesecskip{\baselineskip}
+\setlength\cftbeforesubsecskip{\baselineskip}
+\setlength\cftbeforesubsubsecskip{\baselineskip}
+\setlength\cftbeforefigskip{\baselineskip}
+\setlength\cftbeforesubfigskip{\baselineskip}
+\setlength\cftbeforetabskip{\baselineskip}
+\setlength\cftbeforeplateskip{\baselineskip}
 
 \cftsetindents{sec}{0pt}{2.5pc}
 \cftsetindents{subsec}{2.5pc}{3.05pc}
@@ -351,12 +354,15 @@
 %%
 \RequirePackage{varwidth}
 \DeclareRobustCommand{\vw}[2]{%
-  \begin{varwidth}[t]{#1\linewidth}\strut#2\unskip\nobreak\strut
+  \begin{varwidth}[t]{#1\linewidth}\strut#2\unskip\nobreak\strut%
   \end{varwidth}%
 }
 
+%\renewcommand\cftfigfont{\singlespacing}
 \renewcommand{\cftfigaftersnumb}{\vw{0.7}}
+\renewcommand{\cftsubfigaftersnumb}{\vw{0.7}}
 \renewcommand{\cfttabaftersnumb}{\vw{0.7}}
+\renewcommand{\cftsubtabaftersnumb}{\vw{0.7}}
 \renewcommand{\cftplateaftersnumb}{\vw{0.7}}
 
 
@@ -593,7 +599,7 @@ for the degree of\\
 }{}{}
 
 \pretocmd{\mainmatter}{%
-  \addtocontents{toc}{\protect\setlength{\protect\cftbeforechapskip}{0.5\baselineskip}}
+  \addtocontents{toc}{\protect\setlength{\protect\cftbeforechapskip}{2\baselineskip}}
   \addtocontents{toc}{\protect\cftpagenumbersoff{chap}}
   \addtocontents{toc}{\protect\renewcommand\protect\cftchapfont{\protect\bfseries}}
   \settowidth{\tmplength}{\bfseries\MakeUppercase{\chaptername\space N}\cftchapaftersnum}
@@ -607,9 +613,8 @@ for the degree of\\
   \clearpage
   \addtocontents{toc}{\protect\cftpagenumbersoff{part}}
   \addtocontents{toc}{\protect\cftpagenumbersoff{chapter}}
-  \addtocontents{toc}{\protect\setlength{\protect\cftbeforechapskip}{1pc}}
+  \addtocontents{toc}{\protect\setlength{\protect\cftbeforechapskip}{\baselineskip}}
   \addtocontents{toc}{\protect\renewcommand\protect\cftchapfont{\protect\mdseries}}
-  \addtocontents{toc}{\protect\setlength\protect\cftbeforechapskip{0pt}}
   \phantomsection\addcontentsline{toc}{part}{\texorpdfstring{\bfseries Appendices}{Appendices}}
   \thispagestyle{empty}
   \vspace*{\stretch{1}}
