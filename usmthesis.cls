@@ -1,34 +1,61 @@
-%% usmthesis.cls 2016/10/05 version V1.67
-%% 
-%% NOTE: This text file uses UNIX line feed conventions. When (human)
-%% reading this file on other platforms, you may have to use a text
-%% editor that can handle lines terminated by the UNIX line feed
-%% character (0x0A).
-%% 
-%% 
-%% This is the unofficial USM thesis LaTeX class for postgraduate research
-%% students of Universiti Sains Malaysia, Penang, Malaysia, formatted
-%% according to the Guide to the Preparation, Submission and Examination
-%% of Theses, published by IPS USM.  It supercedes usmthesis.sty: much of
-%% the code is essentially the same, although usmthesis is now a class
-%% extending from the book class instead of a style.  usmthesis also provides
-%% some class options for font choice for body text and url, as well as 
-%% boxed (or not) figures.
-%% 
-%% 
-%% The latest version and documentation of usmthesis can be obtained at
-%% http://liantze.penguinattack.org/latextypesetting.html#usmthesis.
-%% contact liantze AT gmail DOT com if you have any questions or
-%% assistance or feedback.  Apologies if I can't respond immediately, but
-%% I'll always try.
-%%
-%%
+%% usmthesis.cls 2016/12/08 version V1.7.
 %% Copyright (c) 2005-2016 by Lim Lian Tze (OH MY GOODNESS HAS IT BEEN THAT LONG)
-%%
 %% Current maintainer: Lim Lian Tze (liantze@gmail.com)
 %
+%% This is an unofficial USM thesis LaTeX class for postgraduate research
+%% students of Universiti Sains Malaysia, Penang, Malaysia, formatted
+%% according to the Guide to the Preparation, Submission and Examination
+%% of Theses, published by IPS USM. It can be obtained at
+%% http://liantze.penguinattack.org/latextypesetting.html#usmthesis (I will
+%% likely withdraw it at any time if there continues to be frequent,
+%% inconsistent and undocumented changes, until a formal, updated guidleines
+%% is published.)
+%%
+%% IMPORTANT MESSAGE (Dec 2016)
+%% Due to the recent numerous changes requested by IPS, USM to different
+%% candidates -- often conflicting even within the same week -- without much
+%% consistency nor in black in white, I have found it increasingly difficult
+%% to maintain a coherent version. I have therefore decided to provide some
+%% options that seem to be favored by IPS on different occasions; but will no
+%% longer update the template until an updated formatting guidelines with clear
+%% instructions and concrete samples is published.
+%%
+%% THERE WILL BE NO FURTHER UPDATES UNTIL IPS, USM PUBLISHES AN OFFICIAL
+%% UPDATED FORMATTING GUIDELINES WITH CONCRETE, CLEAR INSTRUCTIONS.
+%%
+%% Individual requests for help to modify this version for your needs will be
+%% handled on a case by case basis, depending on my mood, perhaps for a fee.
+%% Requests for help to modify past versions will NOT be entertained.
+%% Please read http://tex.my/how-to-ask-for-latex-related-help-effectively/.
+%%
+%% (Yes I'm that tired and frustrated. I know everyone just want to graduate,
+%% but I am by now genuinely put off by the tone of some requests with rude
+%% attitudes, unclear descriptions, flip-flopping conditions, etc for something
+%% that was originally for my own use.)
+%%
+%% Submit a git pull request on https://github.com/liantze/usmthesis
+%% if you wish to contribute your changes. No timeframe is set for approvals.
+%% I cannot check through any edited usmthesis.cls of any version without
+%% CVS.
+%%
+%% Usmthesis _was_ fun; but it has ceased to be so for me.
+%%
+%% Oh and if you'd like to adapt this template (the .cls and/or the .tex) for
+%% your institution, that's perfectly fine, but at least keep the license
+%% (LPPL 1.3) and the original author (me) won't you? It's just normal decency.
+%% THANK you. :-)
+%%
+%%
 %  BRIEF CHANGELOG
 %  ===============
+% v1.7  Dec 08 2016
+%     - FINAL UPDATE BEFORE v2.0, which will only be possible when IPS
+%       officially publishes the updated formatted guidelines and samples, and
+%       if there is any real interest for a new version at all.
+%     - Added a bunch of new document class options that you can mix and match
+%       to appease IPS' various combinations of requirements. PLEASE READ THE
+%       COMMENTS AT THE TOP AND THROUGHOUT usmthesis.tex.
+%
 % v1.67 Oct 05 2016
 %     - Refactored code in .cls.
 %     - Chapter heading spacing should be more consistent now.
@@ -58,13 +85,13 @@
 %
 % v1.61 Sep 22 2015
 %     - Abstract titles are now 12pt (irrespective of the font being used)
-%     - Default bibliography style is now APA 
+%     - Default bibliography style is now APA
 %       (with \RequirePackage[natbibapa]{apacite})
 %
 % v1.6 Aug 21 2015
 %     - (Based on feedback from Puan Nurul Hasyda of IPS)
 %     - Chapters are now in bold in the TOC.
-%     - Eliminated vertical spaces at the top and bottom of cover and 
+%     - Eliminated vertical spaces at the top and bottom of cover and
 %       title page.
 %     - Apparently if using Times, must be in 12pt. So no more 11pt,
 %       12pt choices. But sans serif (Arial) is allowed again, but must
@@ -91,7 +118,7 @@
 %
 %  v1.2 Nov 15 2007
 %     - New thesis format in force as of 16 November 2007!
-%     - There is now no times, helvet or cm options. Body font is now 
+%     - There is now no times, helvet or cm options. Body font is now
 %       Times Roman for serif type, Helvetica for sans serif type, and
 %       TX Typewriter for typewriter font.
 %     - Bottom page margin increased to 4.0cm.
@@ -106,7 +133,7 @@
 %       * dotted leader between titles and page number
 %       * larger separation between (sub)section numbers and titles to resemble
 %         the sample in the guidelines more closely
-%     - Fixed bug in definition of \chapter to honour short title in 
+%     - Fixed bug in definition of \chapter to honour short title in
 %       \chapter[short title]{full title}
 %
 %  v1.1 May 20 2007
@@ -130,9 +157,9 @@
 %     - first stab at usmthesis as a package (usmthesis.sty).
 %
 %
-% Available class options 
-% (e.g., \documentclass[urlsf,boxfig,txtt]{usmthesis} 
-% 
+% Available class options
+% (e.g., \documentclass[urlsf,boxfig,txtt]{usmthesis}
+%
 %             *** choose only one from each category ***
 %
 % urlrm, urlsf, urltt
@@ -148,9 +175,10 @@
 %   determines if figures will have a visible bounding box.
 %
 %   The default is noboxfig.
-
+%
+% ....and a bunch of other options that I don't feel like documenting :-/
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{usmthesis}[2016/03/22 version 1.65]
+\ProvidesClass{usmthesis}[2016/12/07 version 1.7]
 
 \RequirePackage{silence}
 \WarningFilter{float}{Can't redefine}
@@ -167,6 +195,29 @@
 \newif\if@timesthesis
 \DeclareOption{times}{\@timesthesistrue}
 \DeclareOption{arial}{\@timesthesisfalse}
+
+% Added December 2016 to cater for IPS flip-flopping conditions
+\newif\if@singlespacetitle
+\newif\if@tocCAPSref
+\newif\if@tocCAPSfront
+\newif\if@tocCAPSapp
+\newif\if@chapnumwords
+\newif\if@tocchapnumwords
+\newif\if@tocpage
+\newif\if@lotpage
+\newif\if@lofpage
+\newif\if@loppage
+\DeclareOption{singlespacetitle}{\@singlespacetitletrue}
+\DeclareOption{tocCAPSref}{\@tocCAPSreftrue}
+\DeclareOption{tocCAPSfront}{\@tocCAPSfronttrue}
+\DeclareOption{tocCAPSapp}{\@tocCAPSapptrue}
+\DeclareOption{chapnumwords}{\@chapnumwordstrue}
+\DeclareOption{tocchapnumwords}{\@tocchapnumwordstrue}
+\DeclareOption{tocpage}{\@tocpagetrue}
+\DeclareOption{lotpage}{\@lotpagetrue}
+\DeclareOption{lofpage}{\@lofpagetrue}
+\DeclareOption{loppage}{\@loppagetrue}
+
 
 \DeclareOption{urltt}{\@urltttrue\@urlrmfalse\@urlsffalse}
 \DeclareOption{urlsf}{\@urlsftrue\@urlttfalse\@urlrmfalse}
@@ -189,7 +240,7 @@
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[T1]{fontenc}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Sets up the fonts: Load the Times, Helvetica and 
+%% Sets up the fonts: Load the Times, Helvetica and
 %% Courier (or TX Typewriter) fonts for serif, sans serif
 %% and typewriter respectively.
 %% (Helvetica is loaded in lieu of Arial, which is
@@ -197,6 +248,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage{mathptmx}
 \RequirePackage{helvet}
+\RequirePackage{textcase}
 \renewcommand{\ttdefault}{lmtt}
 
 \if@timesthesis
@@ -221,8 +273,8 @@
 %\RequirePackage{subfigure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% When "bahasa" is specified last, all the sectioning 
-% commands become Malay e.g. "Bab", 
+% When "bahasa" is specified last, all the sectioning
+% commands become Malay e.g. "Bab",
 % "Dafter Isi" etc.  "english" is the main language
 % here. Babel now supports bahasam.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -244,7 +296,7 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% These packages will help you in typesetting 
+% These packages will help you in typesetting
 % mathematical symbols, formulae and equations.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage{amsmath,amssymb,textcomp}
@@ -257,12 +309,25 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% For formatting coutners/numbers as words.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{fmtcount}
+\newcommand{\formatchapnum}[1]{\NUMBERstring{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Formatting of the various sectioning headings
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage{titlesec}
 % chapters
 %% Aug 2015: Chapter heading sizes must be FIXED at 14pt, according to IPS.
-\titleformat{\chapter}[display]{\filcenter\bfseries}{\fontsize{14pt}{16pt}\selectfont\MakeUppercase{\chaptername{} \thechapter}}{-1em}{\begingroup\singlespacing\bfseries\fontsize{14pt}{16pt}\selectfont\MakeUppercase}[\endgroup]
+\titleformat{\chapter}[display]
+{\filcenter\bfseries}
+{\fontsize{14pt}{16pt}\selectfont\MakeTextUppercase{\chaptername{}\space%
+ \if@chapnumwords\formatchapnum{chapter}%
+ \else\thechapter\fi}}
+{-1em}
+{\begingroup\singlespacing\bfseries\fontsize{14pt}{16pt}\selectfont\MakeTextUppercase}
+[\endgroup]
 
 %\titlespacing*{\chapter}{0pt}{*-4.5}{*6}
 \titlespacing*{\chapter}{0pt}{-50pt}{\baselineskip}
@@ -324,8 +389,12 @@
 \renewcommand\cftchappagefont{\normalfont\normalsize}
 \renewcommand\cftchapdotsep{1}
 \renewcommand\cftchapleader{\normalfont\cftdotfill{\cftchapdotsep}}
-\renewcommand\cftchappresnum{\MakeUppercase{\chaptername} }
+\renewcommand\cftchappresnum{\MakeTextUppercase{\chaptername} }
+\if@tocchapnumwords
+\renewcommand\cftchapaftersnum{:\space}
+\else
 \renewcommand\cftchapaftersnum{\space\;--\;}
+\fi
 \newlength\tmplength
 
 \renewcommand\cftfigpresnum{Figure }
@@ -394,17 +463,17 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % This package will help you in typesetting urls!
-% If you just type a URL like 
+% If you just type a URL like
 %    http://cs.usm.my/~abc/cgi/index.php?q=bye%20%bye
 % something is going to get VERY wrong sooner or later.
-% Typeset your URL like this instead: 
+% Typeset your URL like this instead:
 % \url{http://cs.usm.my/~abc/cgi/index.php?q=bye%20%bye}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage{url}
 \if@urlrm\urlstyle{rm}\else\if@urltt\urlstyle{tt}\else\urlstyle{sf}\fi\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% For typesetting the list of abbreviations and maybe help 
+% For typesetting the list of abbreviations and maybe help
 % control their expansion in the text.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage{acronym}
@@ -451,15 +520,12 @@
 % \RequirePackage[numbers]{natbib}
 % \RequirePackage{natbib}
 \RequirePackage[natbibapa]{apacite}
-\addto\captionsenglish{%
-  \renewcommand{\bibname}{References}
-}
 \setlength\bibsep{1em}
 \setlength\bibhang{1.5em}
 \renewcommand\bibfont{\singlespacing}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Multiple bibliographics, used to hack up a list of 
+% Multiple bibliographics, used to hack up a list of
 % own publications
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage[resetlabels]{multibib}
@@ -480,20 +546,27 @@
 
 %% Oct 2016: Use \xpatchcmd to do a cleaner job at capitalising the chapter titles
 \let\old@chapter\@chapter
+\if@tocchapnumwords%
+\patchcmd{\l@chapter}% <cmd>
+  {\leavevmode}% <search>
+  {\leavevmode%
+   \renewcommand{\numberline}[1]{\hbox{\@cftbsnum ##1\@cftasnum}\@cftasnumb}}% <replace>
+  {}{}% <success><failure>
 \xpatchcmd{\@chapter}{\numberline{\thechapter}#1}
-  {\numberline{\thechapter}\texorpdfstring{\uppercase{#1}}{#1}}
+  {\numberline{\texorpdfstring{\expandafter\formatchapnum{chapter}}{\thechapter}}\texorpdfstring{\MakeTextUppercase{#1}}{#1}}
   {}{\PackageWarning{usmthesis}{Couldn't patch chapter.}}
+\else
+\xpatchcmd{\@chapter}{\numberline{\thechapter}#1}
+  {\numberline{\thechapter}\texorpdfstring{\MakeTextUppercase{#1}}{#1}}
+  {}{\PackageWarning{usmthesis}{Couldn't patch chapter.}}
+\fi
 
 \xpatchcmd{\@chapter}{\addcontentsline{toc}{chapter}{#1}\fi\chaptermark{#1}}
-  {\addcontentsline{toc}{chapter}{\texorpdfstring{\uppercase{#1}}{#1}}\fi\chaptermark{#1}}
+  {\addcontentsline{toc}{chapter}{\texorpdfstring{\MakeTextUppercase{#1}}{#1}}\fi\chaptermark{#1}}
   {}{\PackageWarning{usmthesis}{Couldn't patch chapter.}}
 
 \xpatchcmd{\@chapter}{\@makechapterhead{#2}}
-  {\@makechapterhead{\texorpdfstring{\uppercase{#2}}{#1}}}
-  {}{\PackageWarning{usmthesis}{Couldn't patch chapter.}}
-
-\xpatchcmd{\@chapter}{\@makechapterhead{#2}}
-  {\@makechapterhead{\texorpdfstring{\uppercase{#2}}{#1}}}
+  {\@makechapterhead{\texorpdfstring{\MakeTextUppercase{#2}}{#1}}}
   {}{\PackageWarning{usmthesis}{Couldn't patch chapter.}}
 
 \xpatchcmd{\@chapter}{\addtocontents{lof}{\protect\addvspace{10\p@}}}
@@ -505,51 +578,66 @@
 
 %% Creates the first two cover pages
 \newcommand\makecover{%
-\begin{titlepage} \centering\fontsize{18pt}{20pt}\selectfont\bfseries{%
+\begin{titlepage} \centering\fontsize{18pt}{20pt}\selectfont\bfseries%
 %\vspace*{10mm}
 %
-{\fontsize{18pt}{20pt}\selectfont\MakeUppercase{\@title}\par}
+\begingroup
+\if@singlespacetitle\singlespacing\fi
+\fontsize{18pt}{20pt}\selectfont%
+\MakeTextUppercase{\@title}\par
+\endgroup
 %
 \vspace*{\stretch{1}}
 
-\MakeUppercase{\@author}\par
+\MakeTextUppercase{\@author}\par
 
 \vspace*{\stretch{1}}
 
 UNIVERSITI SAINS MALAYSIA\par
 
-\@submityear 
+\@submityear\par
 %
 %\vspace*{20mm}
-}
-
 \end{titlepage}
 
 
 \thispagestyle{empty}{\centering\bfseries
 %\vspace*{15mm}
 
-{\fontsize{18pt}{20pt}\selectfont\MakeUppercase{\@title}\par}
+\begingroup
+\if@singlespacetitle\singlespacing\fi
+\fontsize{18pt}{20pt}\selectfont
+\MakeTextUppercase{\@title}\par
+\endgroup
 
 \vspace*{\stretch{2}}
 
-{\fontsize{14pt}{16pt}\selectfont by\par}
+\begingroup
+\fontsize{12pt}{14pt}\selectfont%
+by\par
+\endgroup
 
 \vspace*{\stretch{2}}
 
-\MakeUppercase{\fontsize{18pt}{20pt}\selectfont\@author}\par
+\begingroup
+\fontsize{18pt}{20pt}\selectfont%
+\MakeTextUppercase{\@author}\par
+\endgroup
 
 \vspace*{\stretch{2}}
 
-\begin{singlespace}
-\fontsize{16pt}{18pt}\selectfont Thesis submitted in fulfilment of the requirements\\
+\begingroup
+\singlespacing\fontsize{12pt}{14pt}\selectfont%
+Thesis submitted in fulfilment of the requirements\\
 for the degree of\\
-\fontsize{16pt}{18pt}\selectfont \@degreetype\par
-\end{singlespace}
+\@degreetype\par
+\endgroup
 
 \vspace*{\stretch{2}}
 
-{\fontsize{18pt}{20pt}\selectfont\@submitmonth \ \@submityear }\par
+\begingroup
+\fontsize{18pt}{20pt}\selectfont\@submitmonth \ \@submityear\par
+\endgroup
 
 %\vspace*{20mm}
 }
@@ -558,35 +646,42 @@ for the degree of\\
 
 %% English environment
 \newenvironment{EnAbstract}{%
-  \titlespacing*{\chapter}{0pt}{-50pt}{\baselineskip}
-  \titleformat{\chapter}[display]{\filcenter\bfseries}{\fontsize{12pt}{14pt}\selectfont\MakeUppercase{\chaptername{} \thechapter}}{-1em}{\linespread{2}\bfseries\fontsize{12pt}{14pt}\selectfont\MakeUppercase}
-  \chapter[Abstract]{\@title}%
-  {\centering\fontsize{12pt}{14pt}\bfseries\selectfont ABSTRACT\par}
+  \titlespacing*{\chapter}{0pt}{-50pt}{0pt}
+  \titleformat{\chapter}[display]{\filcenter\bfseries}{\fontsize{12pt}{14pt}\selectfont\MakeTextUppercase{\chaptername{} \thechapter}}{-1em}{\linespread{2}\bfseries\fontsize{12pt}{14pt}\selectfont\MakeTextUppercase}
+  \chapter[\abstractname]{\@title}%
+  {\centering\fontsize{12pt}{14pt}\bfseries\selectfont ABSTRACT\\}
 }{%
   \ignorespacesafterend%
 }
 
 %% Malay abstract environment
 \newenvironment{MsAbstract}{%
-  \titlespacing*{\chapter}{0pt}{-50pt}{\baselineskip}
-  \titleformat{\chapter}[display]{\filcenter\bfseries}{\fontsize{12pt}{14pt}\selectfont\MakeUppercase{\chaptername{} \thechapter}}{-1em}{\linespread{2}\bfseries\fontsize{12pt}{14pt}\selectfont\MakeUppercase}
+  \titlespacing*{\chapter}{0pt}{-50pt}{0pt}
+  \titleformat{\chapter}[display]{\filcenter\bfseries}{\fontsize{12pt}{14pt}\selectfont\MakeTextUppercase{\chaptername{} \thechapter}}{-1em}{\linespread{2}\bfseries\fontsize{12pt}{14pt}\selectfont\MakeTextUppercase}
   \begin{otherlanguage}{bahasam}%
-  \chapter[Abstrak]{\@titlems}%
-  {\centering\fontsize{12pt}{14pt}\bfseries\selectfont ABSTRAK\par}
+  \chapter[\abstractname]{\@titlems}%
+  {\centering\fontsize{12pt}{14pt}\bfseries\selectfont ABSTRAK\\}
 }{%
   \end{otherlanguage}\ignorespacesafterend
 }
 
 \apptocmd{\frontmatter}{%
   \addtocontents{toc}{\protect\raggedright\protect\sloppy}
+  \if@tocpage
   \addtocontents{toc}{\protect\hfill{\protect\bfseries Page}\\}
+  \fi
   \addtocontents{lof}{\protect\raggedright\protect\sloppy}
+  \if@lofpage
   \addtocontents{lof}{\protect\hfill{\protect\bfseries Page}\\}
+  \fi
   \addtocontents{lot}{\protect\raggedright\protect\sloppy}
+  \if@lotpage
   \addtocontents{lot}{\protect\hfill{\protect\bfseries Page}\\}
+  \fi
   \addtocontents{lop}{\protect\raggedright\protect\sloppy}
+  \if@loppage
   \addtocontents{lop}{\protect\hfill{\protect\bfseries Page}\\}
-  \renewcommand\contentsname{Table of Contents}
+  \fi
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   % Inserts a "Front Matter" bookmark if using pdfLaTeX
@@ -602,33 +697,79 @@ for the degree of\\
   \addtocontents{toc}{\protect\setlength{\protect\cftbeforechapskip}{2\baselineskip}}
   \addtocontents{toc}{\protect\cftpagenumbersoff{chap}}
   \addtocontents{toc}{\protect\renewcommand\protect\cftchapfont{\protect\bfseries}}
-  \settowidth{\tmplength}{\bfseries\MakeUppercase{\chaptername\space N}\cftchapaftersnum}
-  \addtocontents{toc}{\protect\setlength{\cftchapnumwidth}{\the\tmplength}}
+  \settowidth{\tmplength}{\bfseries\MakeTextUppercase{\chaptername\space N}\cftchapaftersnum}
+  \if@tocchapnumwords
+    \addtocontents{toc}{\protect\setlength{\cftchapnumwidth}{0pt}}
+  \else
+    \addtocontents{toc}{\protect\setlength{\cftchapnumwidth}{\the\tmplength}}
+  \fi
   \titlespacing*{\chapter}{0pt}{-50pt}{\baselineskip}
-  \ifpdf\pdfbookmark[-1]{Main Chapters}{main}\else\fi
+}{}{}
+
+\apptocmd{\mainmatter}{
+\ifpdf\pdfbookmark[-1]{Main Chapters}{main}\else\fi
 }{}{}
 
 
+\newcommand{\appendixtocname}{Appendices}
 \pretocmd{\appendix}{%
   \clearpage
   \addtocontents{toc}{\protect\cftpagenumbersoff{part}}
   \addtocontents{toc}{\protect\cftpagenumbersoff{chapter}}
   \addtocontents{toc}{\protect\setlength{\protect\cftbeforechapskip}{\baselineskip}}
   \addtocontents{toc}{\protect\renewcommand\protect\cftchapfont{\protect\mdseries}}
-  \phantomsection\addcontentsline{toc}{part}{\texorpdfstring{\bfseries Appendices}{Appendices}}
+  \phantomsection\addcontentsline{toc}{part}{\texorpdfstring{\bfseries\appendixtocname}{\appendixtocname}}
   \thispagestyle{empty}
   \vspace*{\stretch{1}}
     \begin{center}
-      {\Huge\bfseries APPENDICES}
+      {\Huge\bfseries\MakeTextUppercase{\appendixtocname}}
     \end{center}
   \vspace*{\stretch{2}}
   \let\@chapter\old@chapter % Oct '16: restore old chapter
 %  \addtocontents{toc}{\protect\renewcommand{\protect\chaptername}{\appendixname}}
-  %\settowidth{\tmplength}{\bfseries\MakeUppercase{\appendixname}\space N\cftchapaftersnum}
+  %\settowidth{\tmplength}{\bfseries\MakeTextUppercase{\appendixname}\space N\cftchapaftersnum}
   \addtocontents{toc}{\protect\renewcommand{\protect\cftchappresnum}{\protect\appendixname\protect\space}}
   \settowidth{\tmplength}{\bfseries\appendixname\space N\cftchapaftersnum}
   \addtocontents{toc}{\protect\setlength{\cftchapnumwidth}{\the\tmplength}}
   \renewcommand\chaptername{\appendixname}
+  \patchcmd{\formatchapnum}{\NUMBERstring}{\Alph}{}{}
 }{}{}
+
+\if@tocCAPSfront
+\renewcommand{\cftchapfont}{\bfseries}
+\xpatchcmd{\@chapter}{\addcontentsline{toc}{chapter}{#1}}
+  {\addcontentsline{toc}{chapter}{\texorpdfstring{\MakeTextUppercase{#1}}{#1}}}
+  {}{\PackageWarning{usmthesis}{Couldn't patch front matter chapters}}
+\addto\captionsenglish{
+  \renewcommand\contentsname{\texorpdfstring{TABLE OF CONTENTS}{Table of Contents}}
+  \renewcommand\listfigurename{\texorpdfstring{LIST OF FIGURES}{List of Figures}}
+  \renewcommand\listtablename{\texorpdfstring{LIST OF TABLES}{List of Tables}}
+  \renewcommand\listplatename{\texorpdfstring{LIST OF PLATES}{List of Plates}}
+  \renewcommand\abstractname{\texorpdfstring{ABSTRACT}{Abstract}}
+}
+\addto\captionsbahasam{
+  \renewcommand\abstractname{\texorpdfstring{ABSTRAK}{Abstrak}}
+}
+\else
+\addto\captionsenglish{
+  \renewcommand\contentsname{Table of Contents}
+}
+\fi
+
+\if@tocCAPSref
+\AtBeginDocument{
+  \renewcommand\bibname{\texorpdfstring{REFERENCES}{References}}
+}
+\else
+\AtBeginDocument{
+  \renewcommand{\bibname}{References}
+}
+\fi
+
+\if@tocCAPSapp
+\AtBeginDocument{
+  \renewcommand\appendixtocname{\texorpdfstring{APPENDICES}{Appendices}}
+}
+\fi
 
 \endinput

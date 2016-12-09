@@ -1,5 +1,13 @@
 BRIEF CHANGELOG
 ===============
+v1.7  Dec 08 2016
+    - FINAL UPDATE BEFORE v2.0, which will only be possible when IPS
+      officially publishes the updated formatted guidelines and samples, and
+      if there is any real interest for a new version at all.
+    - Added a bunch of new document class options that you can mix and match
+      to appease IPS' various combinations of requirements. PLEASE READ THE
+      COMMENTS AT THE TOP AND THROUGHOUT usmthesis.tex.
+
 v1.67 Oct 05 2016
     - Refactored code in .cls.
     - Chapter heading spacing should be more consistent now.
@@ -35,7 +43,7 @@ v1.61 Sep 22 2015
 v1.6 Aug 21 2015
     - (Based on feedback from Puan Nurul Hasyda of IPS)
     - Chapters are now in bold in the TOC.
-    - Eliminated vertical spaces at the top and bottom of cover and 
+    - Eliminated vertical spaces at the top and bottom of cover and
       title page.
     - Apparently if using Times, must be in 12pt. So no more 11pt,
       12pt choices. But sans serif (Arial) is allowed again, but must
@@ -61,7 +69,7 @@ v1.3 May 12 2012
 
 v1.2 Nov 15 2007
    - New thesis format in force as of 16 November 2007!
-   - There is now no times, helvet or cm options. Body font is now 
+   - There is now no times, helvet or cm options. Body font is now
      Times Roman for serif type, Helvetica for sans serif type, and
      TX Typewriter for typewriter font.
    - Bottom page margin increased to 4.0cm.
@@ -76,7 +84,7 @@ v1.2 Nov 15 2007
      * dotted leader between titles and page number
      * larger separation between (sub)section numbers and titles to resemble
        the sample in the guidelines more closely
-   - Fixed bug in definition of \chapter to honour short title in 
+   - Fixed bug in definition of \chapter to honour short title in
      \chapter[short title]{full title}
 
 v1.1 May 20 2007
