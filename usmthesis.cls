@@ -207,6 +207,7 @@
 \newif\if@lotpage
 \newif\if@lofpage
 \newif\if@loppage
+\newif\if@loapage % Added for List of Algorithm
 \DeclareOption{singlespacetitle}{\@singlespacetitletrue}
 \DeclareOption{tocCAPSref}{\@tocCAPSreftrue}
 \DeclareOption{tocCAPSfront}{\@tocCAPSfronttrue}
@@ -217,6 +218,7 @@
 \DeclareOption{lotpage}{\@lotpagetrue}
 \DeclareOption{lofpage}{\@lofpagetrue}
 \DeclareOption{loppage}{\@loppagetrue}
+\DeclareOption{loapage}{\@loapagetrue}
 
 
 \DeclareOption{urltt}{\@urltttrue\@urlrmfalse\@urlsffalse}
@@ -393,13 +395,14 @@
 \if@tocchapnumwords
 \renewcommand\cftchapaftersnum{:\space}
 \else
-\renewcommand\cftchapaftersnum{\space\;--\;}
+\renewcommand\cftchapaftersnum{\quad} % latest USM format as of Sept 2022
+%\renewcommand\cftchapaftersnum{\space\;--\;}
 \fi
 \newlength\tmplength
 
 \renewcommand\cftfigpresnum{Figure }
 \cftsetindents{fig}{0pt}{6.2pc}
-\renewcommand\cftfigdotsep{\cftnodots}
+%\renewcommand\cftfigdotsep{\cftnodots} % Commented out to add dots following the latest USM format as of Sept 2022
 %\renewcommand\cftfigpagefont{\bfseries}
 
 \renewcommand\cftsubfigpresnum{Figure }
@@ -410,12 +413,12 @@
 
 \renewcommand\cfttabpresnum{Table }
 \cftsetindents{tab}{0pt}{6.2pc}
-\renewcommand\cfttabdotsep{\cftnodots}
+%\renewcommand\cfttabdotsep{\cftnodots} % Commented out to add dots following the latest USM format as of Sept 2022
 %\renewcommand\cfttabpagefont{\bfseries}
 
 \renewcommand\cftplatepresnum{Plate }
 \cftsetindents{plate}{0pt}{6.2pc}
-\renewcommand\cftplatedotsep{\cftnodots}
+%\renewcommand\cftplatedotsep{\cftnodots} % Commented out to add dots following the latest USM format as of Sept 2022
 %\renewcommand\cftplatepagefont{\bfseries}
 
 %% Oct '16: So in case of multiline entries in the content lists, it looks like IPS
@@ -681,6 +684,11 @@ for the degree of\\
   \addtocontents{lop}{\protect\raggedright\protect\sloppy}
   \if@loppage
   \addtocontents{lop}{\protect\hfill{\protect\bfseries Page}\\}
+  \fi
+  %% For Algorithm
+  \addtocontents{loa}{\protect\raggedright\protect\sloppy}
+  \if@loapage
+  \addtocontents{loa}{\protect\hfill{\protect\bfseries Page}\\}
   \fi
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

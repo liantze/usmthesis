@@ -1,0 +1,6 @@
+\chapter{List of Appendices}
+
+\begin{acronym}[APPENDIX A\quad]
+\acro{APPENDIX A}{\uppercase{Data Used}}
+\acro{APPENDIX B}{\uppercase{UML Diagrams}}
+\end{acronym}

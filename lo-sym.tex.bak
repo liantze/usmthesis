@@ -1,0 +1,6 @@
+\chapter{List of Symbols}
+
+\begin{acronym}[lim\quad] %% replace 'theta' with the longest acronym in your list
+\acro{lim}[$\lim{}$]{Limit}
+\acro{theta}[$\theta{}$]{Angle in radians}
+\end{acronym}

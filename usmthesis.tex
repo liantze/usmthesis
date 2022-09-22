@@ -68,11 +68,15 @@
 \documentclass[
 singlespacetitle, % Make title on cover page singlespaced
 % chapnumwords,tocchapnumwords,  %% ``Chapter One'' I think Engineering like this
-tocpage,  % Put ``Page'' at top of ToC. Add lotpage, lofpage if
-          % ``Page'' is also needed for LoT and LoF.
-% tocCAPSfront, % Make ``List of Tables'' etc in ToC CAPS
-% tocCAPSref, % Make ``References'' in ToC CAPS
-% tocCAPSapp, % Make ``Appendices'' in ToC CAPS
+%tocpage,  % Put ``Page'' at top of ToC. Add lotpage, lofpage if
+           % ``Page'' is also needed for LoT and LoF.
+           % Remove "Page" for TOC as per latest USM format as of Sept 2022
+lotpage,   % Add "Page" for the rest
+loppage,
+loapage,
+tocCAPSfront, % Make ``List of Tables'' etc in ToC CAPS
+tocCAPSref, % Make ``References'' in ToC CAPS
+tocCAPSapp, % Make ``Appendices'' in ToC CAPS
 ]{usmthesis}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -84,6 +88,10 @@ tocpage,  % Put ``Page'' at top of ToC. Add lotpage, lofpage if
 % Created by Lim Lian Tze (Ph.D.)
 % liantze@gmail.com
 % http://liantze.penguinattack.org.
+%
+% 22 Sept 2022: Slightly updated to follow the latest USM format
+% by Wan Nor Arifin
+% https://wnarifin.github.io
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% Example of loading other packages that you may require.
@@ -109,6 +117,9 @@ tocpage,  % Put ``Page'' at top of ToC. Add lotpage, lofpage if
 \usepackage{algorithm}
 \usepackage{indentfirst}
 
+%% Redefined commands
+\renewcommand*{\aclabelfont}[1]{{\acsfont{#1}}} % Unbold \acro as per latest USM format as of Sept 2022
+
 %% Enter particulars about your thesis HERE
 % Your Name
 \author{Lim Lian Tze}
@@ -117,9 +128,9 @@ tocpage,  % Put ``Page'' at top of ToC. Add lotpage, lofpage if
 % Malay title of your thesis
 \titlems{Penulisan Tesis dengan LaTeX}
 % Year submitted
-\submityear{2015}
+\submityear{2022}
 % Month submitted
-\submitmonth{December}
+\submitmonth{September}
 %% Choose only 1 degree type! :-)
 \degreetype{Doctor of Philosphy}
 % \degreetype{Master of Science}
@@ -147,6 +158,14 @@ bookmarksdepth=section,breaklinks=true]{hyperref}
 \usepackage{ragged2e}
 \begin{document}
 
+%% \listofalgorithms fix -- othewise it won't appear in TOC
+\renewcommand{\listofalgorithms}{\begingroup
+\tocfile{\texorpdfstring{LIST OF ALGORITHMS}{List of Algorithms}}{loa}
+\endgroup}
+\makeatletter
+\let\l@algorithm\l@figure
+\makeatother
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Default bibliography style is apa (using
 % \RequirePackage[natbibapa]{apacite} in the class file).
@@ -172,7 +191,7 @@ bookmarksdepth=section,breaklinks=true]{hyperref}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % MAKE SURE YOU HAVE A acknowledgements.tex FILE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\include{acknowledgements}
+\include{acknowledgement}
 
 \tableofcontents \clearpage
 \listoftables \clearpage
@@ -183,11 +202,28 @@ bookmarksdepth=section,breaklinks=true]{hyperref}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \listofplates \clearpage
 
+%% \listofalgorithms style fix -- else it will show Figure instead of Algorithm
+\let\oldlistofalgorithms\listofalgorithms
+\let\oldnumberline\numberline%
+\newcommand{\algnumberline}[1]{Algorithm~#1~~~~~}
+\renewcommand{\listofalgorithms}{%
+  \let\numberline\algnumberline%
+  \oldlistofalgorithms
+  \let\numberline\oldnumberline%
+}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % You can comment out the following line if you don't
-% have a "List of Acronyms"
+% have a "List of Algorithms"
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\include{loa}
+\listofalgorithms \clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% List of Symbols, Abbreviations and Appendix
+% Comment out as required
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\include{lo-sym}
+\include{lo-abb}
+\include{lo-app}
 
 % Paragraph spacing
 \setlength\parskip{18pt}
@@ -248,7 +284,10 @@ bookmarksdepth=section,breaklinks=true]{hyperref}
 %% * If they say they don't want Appendix A, B, C... to appear
 %%   in the ToC either, add
 %%     \addtocontents{toc}{\protect\setcounter{tocdepth}{-1}}
-%%     \addtocontents{toc}{\texbf{List of Publications}} % (to get it to appear)
+%%     \addtocontents{toc}{\textbf{List of Publications}} % (to get it to appear)
+%\pagestyle{empty}
+\addtocontents{toc}{\protect\setcounter{tocdepth}{-1}}
+\addtocontents{toc}{\textbf{\uppercase{List of Publications}}}
 \input{appendices}
 \assignpagestyle{\chapter}{plain}
 

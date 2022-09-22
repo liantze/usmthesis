@@ -1,0 +1,8 @@
+\chapter{List of Abbreviations}
+
+\begin{acronym}[UTMK\quad] %% replace 'UTMK' with the longest acronym in your list
+\acro{IPS}{Institut Pengajian Siswazah}
+\acro{PPSK}{Pusat Pengajian Sains Komputer}
+\acro{USM}{Universiti Sains Malaysia}
+\acro{UTMK}{Unit Terjemahan Melalui Komputer}
+\end{acronym}
