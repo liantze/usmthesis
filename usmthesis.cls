@@ -704,7 +704,8 @@ for the degree of\\
 }{}{}
 
 \pretocmd{\mainmatter}{%
-  \addtocontents{toc}{\protect\setlength{\protect\cftbeforechapskip}{2\baselineskip}}
+  %\addtocontents{toc}{\protect\setlength{\protect\cftbeforechapskip}{2\baselineskip}} % space between chapters
+  \addtocontents{toc}{\protect\setlength{\protect\cftbeforechapskip}{\baselineskip}}  % no space between chapters
   \addtocontents{toc}{\protect\cftpagenumbersoff{chap}}
   \addtocontents{toc}{\protect\renewcommand\protect\cftchapfont{\protect\bfseries}}
   \settowidth{\tmplength}{\bfseries\MakeTextUppercase{\chaptername\space N}\cftchapaftersnum}
