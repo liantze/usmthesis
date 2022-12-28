@@ -368,6 +368,8 @@
 \pretocmd{\@starttoc}{\begingroup\singlespacing}{}{}
 \apptocmd{\@starttoc}{\endgroup}{}{}
 
+%\setlength\cftparskip{0pt}
+
 \setlength\cftbeforepartskip{\baselineskip}
 \setlength\cftbeforechapskip{\baselineskip}
 \setlength\cftbeforesecskip{\baselineskip}

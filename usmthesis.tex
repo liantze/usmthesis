@@ -48,7 +48,7 @@
 %%                   page single-spaced.
 %%
 %% chapnumwords — Make chapter titles be `Chapter One'
-%% tocchapnumwords — Make the ToC use `Chaper One' too
+%% tocchapnumwords — Make the ToC use `Chapter One' too
 %%   (Engineering IPS seems to like the above two settings)
 %%
 %% tocpage   These options will add a ``Page'' label at the
@@ -74,6 +74,7 @@ singlespacetitle, % Make title on cover page singlespaced
 lotpage,   % Add "Page" for the rest
 loppage,
 loapage,
+lofpage,
 tocCAPSfront, % Make ``List of Tables'' etc in ToC CAPS
 tocCAPSref, % Make ``References'' in ToC CAPS
 tocCAPSapp, % Make ``Appendices'' in ToC CAPS
@@ -132,7 +133,7 @@ tocCAPSapp, % Make ``Appendices'' in ToC CAPS
 % Month submitted
 \submitmonth{September}
 %% Choose only 1 degree type! :-)
-\degreetype{Doctor of Philosphy}
+\degreetype{Doctor of Philosophy}
 % \degreetype{Master of Science}
 
 
@@ -156,6 +157,7 @@ bookmarksdepth=section,breaklinks=true]{hyperref}
 \fi
 
 \usepackage{ragged2e}
+
 \begin{document}
 
 %% \listofalgorithms fix -- othewise it won't appear in TOC
@@ -236,7 +238,6 @@ bookmarksdepth=section,breaklinks=true]{hyperref}
 \input{abs-mal}
 \input{abs-eng}
 
-
 \mainmatter
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -252,6 +253,7 @@ bookmarksdepth=section,breaklinks=true]{hyperref}
 % (containing the relevant chapters) in the same directory
 % as mainchaps.tex.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\addtocontents{toc}{\protect\setlength{\cftbeforechapskip}{12pt}}  % to remove vspace between main chapter
 \input{mainchaps}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -267,8 +269,6 @@ bookmarksdepth=section,breaklinks=true]{hyperref}
 \bibliography{mybib}
 % now change it back to normal
 \titlespacing*{\chapter}{0pt}{-50pt}{\baselineskip}
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % The appendices.
